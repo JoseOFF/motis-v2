@@ -1,0 +1,569 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Comienzo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">    <script src="js/sweet-alert.min.js"></script>
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/main.js"></script>
+<script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+
+</head>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0d1117 0%, #1c1f26 100%);
+  color: #000000;
+  line-height: 1.6;
+}
+
+/* Header */
+header h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2.8rem;
+  color: #58a6ff;
+  text-align: center;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+
+/* Container */
+main {
+  max-width: 960px;
+  margin: 2rem auto 4rem auto;
+  padding: 0 1rem;
+}
+
+/* Section base styles */
+section {
+  background: #161b22;
+  margin-bottom: 2.5rem;
+  border-radius: 16px;
+  box-shadow:
+    0 8px 16px rgba(0,0,0,0.5),
+    inset 0 0 10px rgba(88,166,255,0.1);
+  padding: 2rem 2.5rem;
+  border-left: 8px solid transparent;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect */
+section:hover {
+  transform: scale(1.03);
+  border-left-color: #3fb950;
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.7),
+    inset 0 0 15px rgba(63,185,80,0.25);
+}
+
+/* Distinct colors for each guide type, progressive */
+section:nth-of-type(5n+1) {
+  border-left-color: #3fb950; /* green */
+  background: linear-gradient(145deg, #1b2a18, #24411c);
+}
+section:nth-of-type(5n+2) {
+  border-left-color: #58a6ff; /* blue */
+  background: linear-gradient(145deg, #162939, #1e3d54);
+}
+section:nth-of-type(5n+3) {
+  border-left-color: #d16ba5; /* pink */
+  background: linear-gradient(145deg, #3c1c31, #5a2e4d);
+}
+section:nth-of-type(5n+4) {
+  border-left-color: #f59e0b; /* amber */
+  background: linear-gradient(145deg, #4a3711, #715012);
+}
+section:nth-of-type(5n+0) {
+  border-left-color: #ef4444; /* red */
+  background: linear-gradient(145deg, #3b1a1a, #632323);
+}
+
+/* Headings inside sections */
+section h1,
+section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+/* Title styles */
+section h1 {
+  font-size: 2rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+section h2 {
+  font-size: 1.5rem;
+  color: #a5d8ff;
+}
+
+/* Lists */
+ul, ol {
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.7rem;
+  font-size: 1.1rem;
+  color: #cdd9e5;
+  line-height: 1.5;
+}
+
+li::marker {
+  color: #58a6ff;
+  font-weight: bold;
+}
+
+/* Buttons */
+.boton {
+  display: inline-block;
+  background: #3fb950;
+  color: #f0f6fc;
+  padding: 0.6rem 1.3rem;
+  border-radius: 12px;
+  margin-top: 0.8rem;
+  margin-right: 0.6rem;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.boton:hover {
+  background: #2a7a2a;
+  box-shadow: 0 6px 16px rgba(42, 122, 42, 0.6);
+}
+
+/* Icon styles for inline icons */
+.icon {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: #8b949e;
+  font-size: 0.9rem;
+  background: #0d1117;
+  border-top: 1px solid #30363d;
+  user-select: none;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.9rem;
+  }
+
+  section {
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.8rem;
+  }
+
+  li {
+    font-size: 1rem;
+  }
+
+  .boton {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Floating button */
+.boton-flotante {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  background-color: #3fb950;
+  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  z-index: 1000;
+  user-select: none;
+}
+
+.boton-flotante:hover {
+  background-color: #238636;
+  transform: translateY(-50%) scale(1.15);
+}
+.guide-section {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  background-color: #ffc0cb; /* Fondo rosa */
+  border-radius: 12px;
+  margin-bottom: 1em;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.guide-section.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  position: relative;
+}
+
+
+  </style>
+<body>
+    <div class="navbar-lateral full-reset">
+        <div class="visible-xs font-movile-menu mobile-menu-button"></div>
+        <div class="full-reset container-menu-movile nav-lateral-scroll">
+            <div class="logo full-reset all-tittles">
+                <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
+                PlayBass!
+            </div>
+            <div class="nav-lateral-divider full-reset"></div>
+            <div class="full-reset" style="padding: 10px 0; color:#fff;">
+                <figure>
+                    <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
+                </figure>
+                <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p>
+            </div>
+            <div class="nav-lateral-divider full-reset"></div>
+            <div class="full-reset nav-lateral-list-menu">
+                <ul class="list-unstyled">
+                    <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
+                    
+                    <li>
+                        <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +<i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                        <ul class="list-unstyled">
+                            <li><a href="https://www.songsterr.com/"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&nbsp;&nbsp; Biblioteca de canciones</a></li>
+                            <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; Eres nuevo en esto?</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                        <ul class="list-unstyled">
+                            <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
+                            <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
+                           
+                        </ul>
+                    </li>
+                    <li>
+                        <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                        <ul class="list-unstyled">
+                            <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; Contactos</a></li>
+                            <li><a href="teacher.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo docente</a></li>
+                            <li><a href="student.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo estudiante</a></li>
+                            <li><a href="personal.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo personal administrativo</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                     
+                    <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="content-page-container full-reset custom-scroll-containers">
+        <nav class="navbar-user-top full-reset">
+            <ul class="list-unstyled full-reset">
+                <figure>
+                   <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
+                </figure>
+                <li style="color:#fff; cursor:default;">
+                    <span class="all-tittles">Admin Name</span>
+                </li>
+                <li  class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
+                    <i class="zmdi zmdi-power"></i>
+                </li>
+                <li  class="tooltips-general search-book-button" data-href="searchbook.html" data-placement="bottom" title="Buscar libro">
+                    <i class="zmdi zmdi-search"></i>
+                </li>
+                <li  class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
+                    <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i>
+                </li>
+                <li class="mobile-menu-button visible-xs" style="float: left !important;">
+                    <i class="zmdi zmdi-menu"></i>
+                </li>
+                <li class="desktop-menu-button hidden-xs" style="float: left !important;">
+                    <i class="zmdi zmdi-swap"></i>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="page-header">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <h1 class="all-tittles">Guia de Uso<small> de PlayBass!
+              </small></h1>
+            </div>
+        </div>
+
+             <div id="feed"></div>
+          <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+<body>
+  <header>
+ 
+  </header>
+
+<main>
+  <!-- Guía: Reconocimiento de Notas -->
+  <section class="guide-section active">
+    <h1>🎸 Guía de Uso: Reconocimiento de Notas</h1>
+    <article class="guide-block">
+      <h2>📌 Requisitos Previos</h2>
+      <ul>
+        <li>Permitir el uso del micrófono.</li>
+        <li>Ambiente silencioso para mejor detección.</li>
+        <li>Tocar una nota a la vez para mayor precisión.</li>
+      </ul>
+    </article>
+    <article class="guide-block">
+      <h2>🧭 Pasos para Usar</h2>
+      <ol>
+        <li>Accede a "Reconocimiento de Notas" en el menú principal.</li>
+        <li>Haz clic en <span class="boton">🎵 Iniciar Reconocimiento</span>.</li>
+        <li>Permite el uso del micrófono cuando se solicite.</li>
+        <li>Toca una nota en tu bajo y espera la detección.</li>
+        <li>Visualiza la nota detectada en pantalla en tiempo real.</li>
+      </ol>
+    </article>
+    <article class="guide-block">
+      <h2>🛠️ Opciones Adicionales</h2>
+      <ul>
+        <li><span class="boton">🔄 Reiniciar</span> el proceso de reconocimiento.</li>
+        <li><span class="boton">📜 Ver historial</span> de notas detectadas.</li>
+        <li>Alternar entre modo claro y oscuro para comodidad visual.</li>
+      </ul>
+    </article>
+    <article class="guide-block">
+      <h2>❓ Preguntas Frecuentes</h2>
+      <ul>
+        <li><strong>¿Qué tan preciso es?</strong> Funciona mejor en el rango 60 Hz a 250 Hz.</li>
+        <li><strong>¿Funciona en dispositivos móviles?</strong> Sí, en navegadores compatibles con micrófono.</li>
+        <li><strong>¿Necesito instalar algo?</strong> No, es una aplicación web sin instalación.</li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- Guía: Uso de Songsterr -->
+  <section class="guide-section">
+    <h1>🎼 Guía de Uso: Songsterr</h1>
+    <article class="guide-block">
+      <h2>📥 ¿Qué es Songsterr?</h2>
+      <p>Songsterr es una plataforma en línea de tablaturas interactivas para guitarra, bajo y batería.</p>
+    </article>
+    <article class="guide-block">
+      <h2>🔍 Buscar una canción</h2>
+      <ol>
+        <li>Ve a <a href="https://www.songsterr.com" target="_blank">songsterr.com</a>.</li>
+        <li>Usa la barra de búsqueda para escribir el nombre de la canción o artista.</li>
+        <li>Selecciona la opción con el instrumento deseado.</li>
+      </ol>
+    </article>
+    <article class="guide-block">
+      <h2>▶️ Reproducción interactiva</h2>
+      <ul>
+        <li>Presiona <strong>Play</strong> para comenzar la reproducción automática del tablatura.</li>
+        <li>Usa los botones para ralentizar, repetir secciones o ajustar la afinación.</li>
+        <li>Puedes activar o desactivar otras pistas del grupo.</li>
+      </ul>
+    </article>
+    <article class="guide-block">
+      <h2>💡 Consejos</h2>
+      <ul>
+        <li>Regístrate para guardar canciones favoritas.</li>
+        <li>Usa el modo de bucle para practicar secciones difíciles.</li>
+        <li>Activa el metrónomo si lo necesitas.</li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- Guía: Uso del Simulador de Bajo -->
+  <section class="guide-section">
+    <h1>🕹️ Guía de Uso: Simulador de Bajo</h1>
+    <article class="guide-block">
+      <h2>🎯 Función Principal</h2>
+      <p>Simula un bajo eléctrico virtual que puedes tocar desde el navegador.</p>
+    </article>
+    <article class="guide-block">
+      <h2>🧭 Cómo Usarlo</h2>
+      <ol>
+        <li>En el menú, selecciona "Simulador de Bajo".</li>
+        <li>Haz clic en las cuerdas virtuales o usa las teclas asignadas (ej. Q-W-E-R).</li>
+        <li>Escucha el sonido simulado al instante.</li>
+      </ol>
+    </article>
+    <article class="guide-block">
+      <h2>⚙️ Ajustes Disponibles</h2>
+      <ul>
+        <li>Modo de afinación estándar o personalizada.</li>
+        <li>Cambio de tipo de bajo (ej. Jazz Bass, Precision).</li>
+        <li>Control de volumen y efectos básicos como distorsión o reverb.</li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- Guía: Uso de PlayBassNET -->
+  <section class="guide-section">
+    <h1>🌐 Guía de Uso: PlayBassNET (Red Social)</h1>
+    <article class="guide-block">
+      <h2>👥 ¿Qué es?</h2>
+      <p>Una red social para bajistas donde puedes compartir tus grabaciones, ideas, aprender y conectar con otros músicos.</p>
+    </article>
+    <article class="guide-block">
+      <h2>📲 Funcionalidades</h2>
+      <ul>
+        <li>Subir y comentar publicaciones de audio o texto.</li>
+        <li>Reaccionar con likes y compartir contenidos de otros.</li>
+        <li>Buscar usuarios por intereses, estilos o instrumentos.</li>
+      </ul>
+    </article>
+    <article class="guide-block">
+      <h2>🧭 Cómo Empezar</h2>
+      <ol>
+        <li>Regístrate o inicia sesión.</li>
+        <li>Completa tu perfil musical (instrumento, experiencia, géneros).</li>
+        <li>Empieza a interactuar: sigue a otros, comenta y comparte tu música.</li>
+      </ol>
+    </article>
+  </section>
+</main>
+
+<!-- Botones de navegación -->
+<div class="navigation-buttons">
+  <button id="prevBtn">⬅️ Anterior</button>
+  <button id="nextBtn">Siguiente ➡️</button>
+</div>
+
+<!-- Estilos -->
+<style>
+  .guide-section {
+    display: none;
+    padding: 1em;
+    background-color: #ffc0cb; /* Fondo rosa para todas las secciones */
+    border-radius: 12px;
+    margin-bottom: 1em;
+  }
+
+  .guide-section.active {
+    display: block;
+  }
+
+  .guide-block {
+    margin-bottom: 1.5em;
+  }
+
+  .navigation-buttons {
+    text-align: center;
+    margin-top: 1em;
+  }
+
+  .navigation-buttons button {
+    margin: 0 10px;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+  }
+
+  .navigation-buttons button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+</style>
+
+<!-- Script de navegación -->
+<script>
+  const sections = document.querySelectorAll('.guide-section');
+  let currentIndex = 0;
+
+  const showSection = index => {
+    sections.forEach((section, i) => {
+      section.classList.toggle('active', i === index);
+    });
+    document.getElementById('prevBtn').disabled = index === 0;
+    document.getElementById('nextBtn').disabled = index === sections.length - 1;
+  };
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      showSection(currentIndex);
+    }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentIndex < sections.length - 1) {
+      currentIndex++;
+      showSection(currentIndex);
+    }
+  });
+
+  showSection(currentIndex);
+
+  
+</script>
+
+  <!-- Botón flotante para cambiar ventana -->
+  <div class="boton-flotante" id="btnSiguiente" title="Siguiente sección">👉</div>
+
+  <footer>
+    © 2025 PlayBass · Guía interactiva por Orlando Balderas
+  </footer>
+
+</body>
+</html>

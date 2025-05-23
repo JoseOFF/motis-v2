@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inicio de sesión</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Importación de librerías y hojas de estilos para el diseño visual -->
+    <script src="js/sweet-alert.min.js"></script>
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Importa jQuery desde CDN -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+      // Si no se carga jQuery desde CDN, carga una copia local
+      window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')
+    </script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- SDK de Supabase para conectar con la base de datos -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+</head>
+
+<body>
+  <div class="login-container full-cover-background">
+    <div class="form-container">
+      <p class="text-center" style="margin-top: 17px;">
+        <i class="zmdi zmdi-account-add zmdi-hc-5x"></i>
+      </p>
+      <h4 class="text-center all-tittles" style="margin-bottom: 30px;">registrarse</h4>
+
+      <form onsubmit="return registrarUsuario(event)">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="group-material-login">
+              <input type="text" id="nombre_usuario" class="material-login-control" required maxlength="70">
+              <span class="highlight-login"></span>
+              <span class="bar-login"></span>
+              <label><i class="zmdi zmdi-account"></i> &nbsp; Nombre de usuario</label>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="group-material-login">
+              <input type="password" id="contrasena" class="material-login-control" required maxlength="70">
+              <span class="highlight-login"></span>
+              <span class="bar-login"></span>
+              <label><i class="zmdi zmdi-lock"></i> &nbsp; Contraseña</label>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div class="row">
+          <div class="col-md-6">
+            <!-- Campo de fecha eliminado -->
+          </div>
+
+          <div class="col-md-6">
+            <div class="group-material-login">
+              <input type="email" id="correo" class="material-login-control" required maxlength="100">
+              <span class="highlight-login"></span>
+              <span class="bar-login"></span>
+              <label><i class="zmdi zmdi-email"></i> &nbsp; Correo electrónico</label>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <button class="btn-login" type="submit">Registrar cuenta &nbsp; <i class="zmdi zmdi-account-add"></i></button>
+      </form>
+    </div>
+  </div>
+
+
+
+  <!-- Script para la base de datos -->
+  <script src="supabase-init.js"></script>
+
+  <script>
+    async function registrarUsuario(event) {
+      event.preventDefault();
+  
+      const correo = document.getElementById('correo').value.trim();
+      const nombre_usuario = document.getElementById('nombre_usuario').value.trim();
+      const contrasena = document.getElementById('contrasena').value.trim();
+  
+      // Verificar si el nombre de usuario ya existe
+      const { data: usuariosPorNombre, error: errorNombre } = await supabaseCliente
+        .from('Usuarios')
+        .select('nombre_usuario')
+        .eq('nombre_usuario', nombre_usuario);
+  
+      if (errorNombre) {
+        console.error(errorNombre);
+        swal("Error", "Ocurrió un error al verificar el nombre de usuario", "error");
+        return;
+      }
+  
+      if (usuariosPorNombre.length > 0) {
+        swal("Usuario duplicado", "Ya existe una cuenta con este nombre de usuario", "warning");
+        return;
+      }
+  
+      // Verificar si el correo ya existe
+      const { data: usuariosPorCorreo, error: errorCorreo } = await supabaseCliente
+        .from('Usuarios')
+        .select('correo')
+        .eq('correo', correo);
+  
+      if (errorCorreo) {
+        console.error(errorCorreo);
+        swal("Error", "Ocurrió un error al verificar el correo", "error");
+        return;
+      }
+  
+      if (usuariosPorCorreo.length > 0) {
+        swal("Correo duplicado", "Ya existe una cuenta con este correo electrónico", "warning");
+        return;
+      }
+  
+      // Si todo está bien, se registra el usuario
+      const datos = {
+        nombre_usuario,
+        contrasena,
+        correo
+      };
+  
+      const { error: errorInsert } = await supabaseCliente.from('Usuarios').insert([datos]);
+  
+      if (errorInsert) {
+        console.error(errorInsert);
+        swal("Error", "No se pudo registrar el usuario", "error");
+      } else {
+          swal("¡Éxito!", "Usuario registrado correctamente", "success");
+          // Redirige después de un pequeño retraso (el usuario ya habrá visto el mensaje)
+            setTimeout(() => {
+            window.location.href = "sesion.html";
+          }, 2000); // Espera 2 segundos
+        }
+    }
+  </script>
+  
+
+
+
+</body>
+</html>
+

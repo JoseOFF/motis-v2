@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inicio de sesión</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Importación de librerías y hojas de estilos para el diseño visual -->
+    <script src="js/sweet-alert.min.js"></script>
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Importa jQuery desde CDN -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+      // Si no se carga jQuery desde CDN, carga una copia local
+      window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')
+    </script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/main.js"></script>
+      <!-- SDK de Supabase para conectar con la base de datos -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+</head>
+
+<body>
+  <!-- Contenedor principal de la página de login -->
+  <div class="login-container full-cover-background">
+    <div class="form-container">
+        <!-- Ícono y título de la página -->
+        <p class="text-center" style="margin-top: 17px;">
+           <i class="zmdi zmdi-account-circle zmdi-hc-5x"></i>
+        </p>
+        <h4 class="text-center all-tittles" style="margin-bottom: 30px;">inicia sesión con tu cuenta</h4>
+
+        <!-- Formulario de inicio de sesión. Se usa onsubmit para llamar a la función validarLogin -->
+        <form onsubmit="return validarLogin(event)">
+          <!-- Campo de texto para el nombre de usuario -->
+          <div class="group-material-login">
+            <input type="text" id="usuario" class="material-login-control" required maxlength="70">
+            <span class="highlight-login"></span>
+            <span class="bar-login"></span>
+            <label><i class="zmdi zmdi-account"></i> &nbsp; Nombres</label>
+          </div>
+          <br>
+          <!-- Campo para la contraseña -->
+          <div class="group-material-login">
+            <input type="password" id="contrasena" class="material-login-control" required maxlength="70">
+            <span class="highlight-login"></span>
+            <span class="bar-login"></span>
+            <label><i class="zmdi zmdi-lock"></i> &nbsp; Contraseña</label>
+          </div>
+          <!-- Botón para enviar el formulario -->
+          <button class="btn-login" type="submit">Ingresar al sistema &nbsp; <i class="zmdi zmdi-arrow-right"></i></button>
+           <!-- Botón para enviar el formulario -->
+           <a href="crearUsuario.html" class="btn-login" style="position: absolute; bottom: 20px; left: -200px;"> Crear cuenta &nbsp; <i class="zmdi zmdi-arrow-right"></i>
+
+
+        </form>
+    </div>   
+  </div>
+
+
+<!-- SDK de Supabase (debe ir antes de cualquier uso de supabase) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<!-- Archivo que inicializa el cliente Supabase -->
+<script src="supabase-init.js"></script>
+
+<!-- Tu script con la lógica de login -->
+<script>
+  async function validarLogin(event) {
+    event.preventDefault();
+
+    const usuario = document.getElementById('usuario').value.trim();
+    const contrasena = document.getElementById('contrasena').value.trim();
+
+    const { data, error } = await supabaseCliente
+      .from('Usuarios')
+      .select('*')
+      .eq('nombre_usuario', usuario)
+      .eq('contrasena', contrasena)
+      .maybeSingle();
+
+    if (error) {
+      console.error('Error:', error);
+      swal("Error", "Hubo un problema al conectar con la base de datos", "error");
+    } else if (!data) {
+      swal("Error", "Usuario o contraseña incorrectos", "error");
+    } else {
+      window.location.href = "home.html";
+    }
+  }
+</script>
+
+
+
+
+</body>
+</html>

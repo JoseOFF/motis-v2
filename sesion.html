@@ -75,12 +75,13 @@
     const usuario = document.getElementById('usuario').value.trim();
     const contrasena = document.getElementById('contrasena').value.trim();
 
-    const { data, error } = await supabaseCliente
-      .from('usuarios')
-      .select('*')
-      .eq('nombre_usuario', usuario)
-      .eq('contrasena', contrasena)
-      .maybeSingle();
+      // Consulta a Supabase para validar credenciales
+      const { data, error } = await supabaseCliente
+        .from('usuarios')
+        .select('*')
+        .eq('nombre_usuario', usuario)
+        .eq('contrasena', contrasena)
+        .maybeSingle();
 
     if (error) {
       console.error('Error al conectar con Supabase:', error.message);

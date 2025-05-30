@@ -84,6 +84,10 @@ function setupMessageSending() {
       content
     }]);
 
+    console.log('User ID:', user.id);
+console.log('Selected User ID:', selectedUser.id);
+
+
     if (error) {
       console.error('Error al enviar mensaje:', error.message);
     } else {

@@ -21,7 +21,10 @@
     <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
 <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
     <link rel="icon" href="assets/img/logo.png" type="image/png">
-    
+ <!-- SDK de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <!-- Inicializador de Supabase (debes tener supabaseCliente definido aquí) -->
+  <script src="supabase-init.js"></script>
 
     <style>
         body {
@@ -229,269 +232,290 @@
 
     
 </head>
+
 <body>
-    <div class="navbar-lateral full-reset">
-        <div class="visible-xs font-movile-menu mobile-menu-button"></div>
-        <div class="full-reset container-menu-movile nav-lateral-scroll">
-            <div class="logo full-reset all-tittles">
-                <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
-                PlayBass!
+  <!-- BARRA LATERAL -->
+  <div class="navbar-lateral full-reset">
+    <div class="visible-xs font-movile-menu mobile-menu-button"></div>
+    <div class="full-reset container-menu-movile nav-lateral-scroll">
+      <!-- Logo y encabezado -->
+      <div class="logo full-reset all-tittles">
+        <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
+        PlayBass!
+      </div>
+
+      <div class="nav-lateral-divider full-reset"></div>
+
+      <!-- Imagen lateral -->
+      <div class="full-reset" style="padding: 10px 0; color:#fff;">
+        <figure>
+          <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
+        </figure>
+        <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p>
+      </div>
+
+      <div class="nav-lateral-divider full-reset"></div>
+
+      <!-- Menú de navegación -->
+      <div class="full-reset nav-lateral-list-menu">
+        <ul class="list-unstyled">
+          <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
+          
+          <li>
+            <div class="dropdown-menu-button">
+              <i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +
+              <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i>
             </div>
-            <div class="nav-lateral-divider full-reset"></div>
-            <div class="full-reset" style="padding: 10px 0; color:#fff;">
-                <figure>
-                    <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
-                </figure>
-                <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p>
-            </div>
-            <div class="nav-lateral-divider full-reset"></div>
-            <div class="full-reset nav-lateral-list-menu">
-                <ul class="list-unstyled">
-                    <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
-                    
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +<i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                        <ul class="list-unstyled">
-                            <li><a href="https://www.songsterr.com/"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&nbsp;&nbsp; Biblioteca de canciones</a></li>
-                            <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; Eres nuevo en esto?</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                        <ul class="list-unstyled">
-                            <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
-                            <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
-                           
-                        </ul>
-                    </li>
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
-                        <ul class="list-unstyled">
-                            <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; Contactos</a></li>
-                            <li><a href="teacher.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo docente</a></li>
-                            <li><a href="student.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo estudiante</a></li>
-                            <li><a href="personal.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo personal administrativo</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                     
-                    <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="content-page-container full-reset custom-scroll-containers">
-        <nav class="navbar-user-top full-reset">
-            <ul class="list-unstyled full-reset">
-                <figure>
-                   <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
-                </figure>
-                <li style="color:#fff; cursor:default;">
-                    <span class="all-tittles">Admin Name</span>
-                </li>
-                <li  class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
-                    <i class="zmdi zmdi-power"></i>
-                </li>
-                <li  class="tooltips-general search-book-button" data-href="searchbook.html" data-placement="bottom" title="Buscar libro">
-                    <i class="zmdi zmdi-search"></i>
-                </li>
-                <li  class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
-                    <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i>
-                </li>
-                <li class="mobile-menu-button visible-xs" style="float: left !important;">
-                    <i class="zmdi zmdi-menu"></i>
-                </li>
-                <li class="desktop-menu-button hidden-xs" style="float: left !important;">
-                    <i class="zmdi zmdi-swap"></i>
-                </li>
+            <ul class="list-unstyled">
+              <li><a href="https://www.songsterr.com/"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&nbsp;&nbsp; Biblioteca de canciones</a></li>
+              <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; Eres nuevo en esto?</a></li>
             </ul>
-        </nav>
-        <div class="container">
-            <div class="page-header">
+          </li>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              <h1 class="all-tittles">PlayBass.Net! <small></small></h1>
+          <li>
+            <div class="dropdown-menu-button">
+              <i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios
+              <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i>
             </div>
+            <ul class="list-unstyled">
+              <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
+              <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <div class="dropdown-menu-button">
+              <i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad
+              <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i>
+            </div>
+            <ul class="list-unstyled">
+              <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; Contactos</a></li>
+              <li><a href="teacher.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo docente</a></li>
+              <li><a href="student.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo estudiante</a></li>
+              <li><a href="personal.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo personal administrativo</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="content-page-container full-reset custom-scroll-containers">
+    <!-- BARRA SUPERIOR -->
+    <nav class="navbar-user-top full-reset">
+      <ul class="list-unstyled full-reset">
+        <figure>
+          <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
+        </figure>
+        <li style="color:#fff; cursor:default;"><span class="all-tittles">Admin Name</span></li>
+        <li class="tooltips-general exit-system-button" data-href="index.html" title="Salir del sistema"><i class="zmdi zmdi-power"></i></li>
+        <li class="tooltips-general search-book-button" data-href="searchbook.html" title="Buscar libro"><i class="zmdi zmdi-search"></i></li>
+        <li class="tooltips-general btn-help" title="Ayuda"><i class="zmdi zmdi-help-outline zmdi-hc-fw"></i></li>
+        <li class="mobile-menu-button visible-xs"><i class="zmdi zmdi-menu"></i></li>
+        <li class="desktop-menu-button hidden-xs"><i class="zmdi zmdi-swap"></i></li>
+      </ul>
+    </nav>
+
+    <!-- ENCABEZADO DE PÁGINA -->
+    <div class="container">
+      <div class="page-header">
+        <h1 class="all-tittles">PlayBass.Net! <small></small></h1>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE PUBLICACIONES -->
+    <section class="full-reset text-center" style="padding: 40px 0;">
+      <!-- Formulario de post -->
+      <form id="postForm" class="create-post">
+        <div class="post-header">
+          <textarea id="commentInput" placeholder="¿En qué estás pensando?" required></textarea>
         </div>
-        <section class="full-reset text-center" style="padding: 40px 0;">
-            <form id="postForm" class="create-post">
-                <div class="post-header">
-                  <textarea id="commentInput" placeholder="¿En qué estás pensando?" required></textarea>
-                </div>
-                <div class="post-footer">
-                  <!-- Ícono para subir imagen -->
-                 <!-- Ícono para subir imagen (solo se verá el ícono, no el input file) -->
-                 <label for="photoInput" class="upload-icon">
-                    <i class="zmdi zmdi-camera-add zmdi-hc-2x"></i>
-                  </label>
-                  <input type="file" id="photoInput" accept="image/*" required style="display: none;">
-                  
+        <div class="post-footer">
+          <label for="photoInput" class="upload-icon">
+            <i class="zmdi zmdi-camera-add zmdi-hc-2x"></i>
+          </label>
+          <input type="file" id="photoInput" accept="image/*" required style="display: none;">
+          <button type="submit" class="post-button">Publicar</button>
+        </div>
+      </form>
 
-                  
-                  
-                  <!-- Botón de publicar -->
-                  <button type="submit" class="post-button">Publicar</button>
-                </div>
-              </form>
-              
-              
-        <div id="feed"></div>
-          <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+      <!-- Feed dinámico -->
+      <div id="feed"></div>
+
+      <!-- Botpress Chat -->
+      <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+      <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
 
 
-        <script>
+      
+         <script type="module">
+        const form = document.getElementById('postForm');
+        const feed = document.getElementById('feed');
 
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
 
+          const file = document.getElementById('photoInput').files[0];
+          const comment = document.getElementById('commentInput').value;
 
-            document.getElementById('postForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-            
-                const file = document.getElementById('photoInput').files[0];
-                const comment = document.getElementById('commentInput').value;
-            
-                const reader = new FileReader();
-                reader.onload = function() {
-                    const imageData = reader.result;
-            
-                    const post = {
-                        image: imageData,
-                        comment: comment
-                    };
-            
-                    let posts = JSON.parse(localStorage.getItem('posts')) || [];
-                    posts.unshift(post);
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    displayPosts();
-                };
-                reader.readAsDataURL(file);
-            });
-            
-            function displayPosts() {
-                const posts = JSON.parse(localStorage.getItem('posts')) || [];
-                const feed = document.getElementById('feed');
-                feed.innerHTML = '';
-            
-                posts.forEach(post => {
-                    const div = document.createElement('div');
-                    div.className = "post";
-                    div.innerHTML = `
-                     <img src="${post.image}">
-                     <p>${post.comment}</p>
-                     <div class="post-actions">
-                     <button class="like-btn">❤️ <span class="like-count">0</span></button>
-                      <div class="comment-section">
-                      <input type="text" class="comment-input" placeholder="Escribe un comentario...">
-                       <button class="comment-btn">Comentar</button>
-                      <ul class="comments-list"></ul>
-                  
-                        </div>
-`;
-// CORAZONES
-const likeBtn = div.querySelector('.like-btn');
-const likeCount = div.querySelector('.like-count');
-let count = 0;
+          if (!file) return alert("Por favor selecciona una imagen");
 
-likeBtn.addEventListener('click', () => {
-  count++;
-  likeCount.textContent = count;
-});
+          // Subir imagen al storage
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${Date.now()}.${fileExt}`;
 
-// COMENTARIOS
-const commentBtn = div.querySelector('.comment-btn');
-const commentInput = div.querySelector('.comment-input');
-const commentsList = div.querySelector('.comments-list');
+          const { data: uploadData, error: uploadError } = await supabaseCliente.storage
+            .from('posts') // asegúrate de tener este bucket creado
+            .upload(fileName, file);
 
-commentBtn.addEventListener('click', () => {
-  const text = commentInput.value.trim();
-  if (text !== "") {
-    const li = document.createElement('li');
-    li.textContent = text;
-    commentsList.appendChild(li);
-    commentInput.value = "";
-  }
-});
+          if (uploadError) {
+            console.error('Error al subir imagen:', uploadError.message);
+            return;
+          }
 
+          const { data: publicUrlData } = supabaseCliente.storage
+            .from('posts')
+            .getPublicUrl(fileName);
 
+          const image_url = publicUrlData.publicUrl;
 
-                    feed.appendChild(div);
-                });
+          // Guardar post en Supabase
+          const { error: insertError } = await supabaseCliente.from('posts').insert([
+            {
+              image_url,
+              comment
             }
-            
-            displayPosts();
+          ]);
 
+          if (insertError) {
+            console.error('Error al guardar post:', insertError.message);
+            return;
+          }
 
+          form.reset();
+          loadPosts();
+        });
 
-           
-  document.addEventListener('DOMContentLoaded', () => {
-    window.botpressWebChat.init({
-      host: 'https://cdn.botpress.cloud/webchat',
-      botId: '92WAM02X',
-      botName: 'Mi Botpress',
-      locale: 'es',
-      showCloseButton: true
-    });
-  });
-            </script>
+        async function loadPosts() {
+          const { data: posts, error } = await supabaseCliente
+            .from('posts')
+            .select('*')
+            .order('created_at', { ascending: false });
 
+          if (error) {
+            console.error('Error al cargar publicaciones:', error.message);
+            return;
+          }
 
-            
-            
-            
-        </section>
-        <div class="modal fade" tabindex="-1" role="dialog" id="ModalHelp">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center all-tittles">ayuda del sistema</h4>
+          feed.innerHTML = '';
+          posts.forEach(post => {
+            const div = document.createElement('div');
+            div.className = "post";
+            div.innerHTML = `
+              <img src="${post.image_url}" />
+              <p>${post.comment}</p>
+              <div class="post-actions">
+                <button class="like-btn">❤️ <span class="like-count">0</span></button>
+                <div class="comment-section">
+                  <input type="text" class="comment-input" placeholder="Escribe un comentario...">
+                  <button class="comment-btn">Comentar</button>
+                  <ul class="comments-list"></ul>
                 </div>
-                <div class="modal-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore dignissimos qui molestias ipsum officiis unde aliquid consequatur, accusamus delectus asperiores sunt. Quibusdam veniam ipsa accusamus error. Animi mollitia corporis iusto.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="zmdi zmdi-thumb-up"></i> &nbsp; De acuerdo</button>
-                </div>
-            </div>
+              </div>
+            `;
+
+            let count = 0;
+            div.querySelector('.like-btn').addEventListener('click', () => {
+              count++;
+              div.querySelector('.like-count').textContent = count;
+            });
+
+            div.querySelector('.comment-btn').addEventListener('click', () => {
+              const input = div.querySelector('.comment-input');
+              const text = input.value.trim();
+              if (text) {
+                const li = document.createElement('li');
+                li.textContent = text;
+                div.querySelector('.comments-list').appendChild(li);
+                input.value = "";
+              }
+            });
+
+            feed.appendChild(div);
+          });
+        }
+
+        loadPosts();
+      </script>
+
+      
+    </section>
+
+    <!-- MODAL DE AYUDA -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="ModalHelp">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+            <h4 class="modal-title text-center all-tittles">Ayuda del sistema</h4>
+          </div>
+          <div class="modal-body">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              <i class="zmdi zmdi-thumb-up"></i> &nbsp; De acuerdo
+            </button>
           </div>
         </div>
-        <footer class="footer full-reset">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="all-tittles">Acerca de</h4>
-                        <p>
-                            PlayBass es una plataforma para aprender y practicar el bajo eléctrico. Ofrece herramientas interactivas, una biblioteca de canciones y una comunidad donde puedes compartir tu progreso y conectar con otros músicos.
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="all-tittles">Desarrollador</h4>
-                        <ul class="list-unstyled">
-                            <li><i class="zmdi zmdi-check zmdi-hc-fw"></i>&nbsp; © Team Wicho<i class="zmdi zmdi-facebook zmdi-hc-fw footer-social"></i><i class="zmdi zmdi-twitter zmdi-hc-fw footer-social"></i></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright full-reset all-tittles">© Team Wicho</div>
-        </footer>
+      </div>
     </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="footer full-reset">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <h4 class="all-tittles">Acerca de</h4>
+            <p>
+              PlayBass es una plataforma para aprender y practicar el bajo eléctrico...
+            </p>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <h4 class="all-tittles">Desarrollador</h4>
+            <ul class="list-unstyled">
+              <li><i class="zmdi zmdi-check zmdi-hc-fw"></i>&nbsp; © Team Wicho <i class="zmdi zmdi-facebook zmdi-hc-fw footer-social"></i><i class="zmdi zmdi-twitter zmdi-hc-fw footer-social"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright full-reset all-tittles">© Team Wicho</div>
+    </footer>
+  </div>
+ <!-- Botpress init fuera del módulo, al final para evitar errores -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.botpressWebChat) {
+        window.botpressWebChat.init({
+          host: 'https://cdn.botpress.cloud/webchat',
+          botId: '92WAM02X',
+          botName: 'Mi Botpress',
+          locale: 'es',
+          showCloseButton: true
+        });
+      } else {
+        console.error('Botpress no está disponible');
+      }
+    });
+  </script>
+
 </body>
+
+
+
 </html>

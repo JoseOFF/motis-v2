@@ -93,7 +93,7 @@
 
       // Consulta a Supabase para validar credenciales
       const { data, error } = await supabaseCliente
-        .from('Usuarios')
+        .from('usuarios')
         .select('*')
         .eq('nombre_usuario', usuario)
         .eq('contrasena', contrasena)

@@ -92,75 +92,71 @@
     </div>
   </div>
 
-  <!-- Inicializador de Supabase -->
-  <script src="supabase-init.js"></script>
+  <!-- Supabase y lógica de registro como módulo -->
+<script type="module">
+  import { supabaseCliente } from './supabase-init.js';
 
-  <!-- Lógica para registrar al usuario -->
-  <script>
-    /**
-     * Función para registrar un nuevo usuario.
-     * Valida que el nombre de usuario y el correo no estén en uso.
-     */
-    async function registrarUsuario(event) {
-      event.preventDefault();
+  async function registrarUsuario(event) {
+    event.preventDefault();
 
-      // Obtener valores del formulario
-      const nombre_usuario = document.getElementById('nombre_usuario').value.trim();
-      const contrasena = document.getElementById('contrasena').value.trim();
-      const correo = document.getElementById('correo').value.trim();
+    const nombre_usuario = document.getElementById('nombre_usuario').value.trim();
+    const contrasena = document.getElementById('contrasena').value.trim();
+    const correo = document.getElementById('correo').value.trim();
 
-      // Verificar si el nombre de usuario ya existe
-      const { data: usuariosPorNombre, error: errorNombre } = await supabaseCliente
-        .from('Usuarios')
-        .select('nombre_usuario')
-        .eq('nombre_usuario', nombre_usuario);
+    // Verificar nombre de usuario
+    const { data: usuariosPorNombre, error: errorNombre } = await supabaseCliente
+      .from('usuarios')
+      .select('nombre_usuario')
+      .eq('nombre_usuario', nombre_usuario);
 
-      if (errorNombre) {
-        console.error(errorNombre);
-        swal("Error", "Ocurrió un error al verificar el nombre de usuario", "error");
-        return;
-      }
-
-      if (usuariosPorNombre.length > 0) {
-        swal("Usuario duplicado", "Ya existe una cuenta con este nombre de usuario", "warning");
-        return;
-      }
-
-      // Verificar si el correo ya existe
-      const { data: usuariosPorCorreo, error: errorCorreo } = await supabaseCliente
-        .from('Usuarios')
-        .select('correo')
-        .eq('correo', correo);
-
-      if (errorCorreo) {
-        console.error(errorCorreo);
-        swal("Error", "Ocurrió un error al verificar el correo", "error");
-        return;
-      }
-
-      if (usuariosPorCorreo.length > 0) {
-        swal("Correo duplicado", "Ya existe una cuenta con este correo electrónico", "warning");
-        return;
-      }
-
-      // Insertar nuevo usuario en la tabla
-      const { error: errorInsert } = await supabaseCliente
-        .from('Usuarios')
-        .insert([{ nombre_usuario, contrasena, correo }]);
-
-      if (errorInsert) {
-        console.error(errorInsert);
-        swal("Error", "No se pudo registrar el usuario", "error");
-      } else {
-        swal("¡Éxito!", "Usuario registrado correctamente", "success");
-
-        // Redirigir a la página de inicio de sesión luego de un breve retraso
-        setTimeout(() => {
-          window.location.href = "sesion.html";
-        }, 2000);
-      }
+    if (errorNombre) {
+      console.error(errorNombre);
+      swal("Error", "Ocurrió un error al verificar el nombre de usuario", "error");
+      return;
     }
-  </script>
+
+    if (usuariosPorNombre.length > 0) {
+      swal("Usuario duplicado", "Ya existe una cuenta con este nombre de usuario", "warning");
+      return;
+    }
+
+    // Verificar correo
+    const { data: usuariosPorCorreo, error: errorCorreo } = await supabaseCliente
+      .from('usuarios')
+      .select('correo')
+      .eq('correo', correo);
+
+    if (errorCorreo) {
+      console.error(errorCorreo);
+      swal("Error", "Ocurrió un error al verificar el correo", "error");
+      return;
+    }
+
+    if (usuariosPorCorreo.length > 0) {
+      swal("Correo duplicado", "Ya existe una cuenta con este correo electrónico", "warning");
+      return;
+    }
+
+    // Registrar nuevo usuario
+    const { error: errorInsert } = await supabaseCliente
+      .from('usuarios')
+      .insert([{ nombre_usuario, contrasena, correo }]);
+
+    if (errorInsert) {
+      console.error(errorInsert);
+      swal("Error", "No se pudo registrar el usuario", "error");
+    } else {
+      swal("¡Éxito!", "Usuario registrado correctamente", "success");
+      setTimeout(() => {
+        window.location.href = "sesion.html";
+      }, 2000);
+    }
+  }
+
+  // Hacer la función global si el formulario la llama con `onsubmit="registrarUsuario(event)"`
+  window.registrarUsuario = registrarUsuario;
+</script>
+
 </body>
 </html>
 

@@ -364,85 +364,122 @@
   <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
 
 
-        <script>
+       <script type="module">
+  import { supabaseCliente } from './supabase-init.js';
 
-
-
-            document.getElementById('postForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-            
-                const file = document.getElementById('photoInput').files[0];
-                const comment = document.getElementById('commentInput').value;
-            
-                const reader = new FileReader();
-                reader.onload = function() {
-                    const imageData = reader.result;
-            
-                    const post = {
-                        image: imageData,
-                        comment: comment
-                    };
-            
-                    let posts = JSON.parse(localStorage.getItem('posts')) || [];
-                    posts.unshift(post);
-                    localStorage.setItem('posts', JSON.stringify(posts));
-                    displayPosts();
-                };
-                reader.readAsDataURL(file);
-            });
-            
-            function displayPosts() {
-                const posts = JSON.parse(localStorage.getItem('posts')) || [];
-                const feed = document.getElementById('feed');
-                feed.innerHTML = '';
-            
-                posts.forEach(post => {
-                    const div = document.createElement('div');
-                    div.className = "post";
-                    div.innerHTML = `
-                     <img src="${post.image}">
-                     <p>${post.comment}</p>
-                     <div class="post-actions">
-                     <button class="like-btn">❤️ <span class="like-count">0</span></button>
-                      <div class="comment-section">
-                      <input type="text" class="comment-input" placeholder="Escribe un comentario...">
-                       <button class="comment-btn">Comentar</button>
-                      <ul class="comments-list"></ul>
-                  
-                        </div>
-`;
-// CORAZONES
-const likeBtn = div.querySelector('.like-btn');
-const likeCount = div.querySelector('.like-count');
-let count = 0;
-
-likeBtn.addEventListener('click', () => {
-  count++;
-  likeCount.textContent = count;
-});
-
-// COMENTARIOS
-const commentBtn = div.querySelector('.comment-btn');
-const commentInput = div.querySelector('.comment-input');
-const commentsList = div.querySelector('.comments-list');
-
-commentBtn.addEventListener('click', () => {
-  const text = commentInput.value.trim();
-  if (text !== "") {
-    const li = document.createElement('li');
-    li.textContent = text;
-    commentsList.appendChild(li);
-    commentInput.value = "";
+  const user = JSON.parse(localStorage.getItem("usuario"));
+  if (!user) {
+    window.location.href = "sesion.html";
   }
-});
 
+  document.getElementById('postForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
+    const file = document.getElementById('photoInput').files[0];
+    const comment = document.getElementById('commentInput').value.trim();
 
-                    feed.appendChild(div);
-                });
-            }
-            
-            displayPosts();
+    if (!file || !comment) return;
+
+    const fileName = `${Date.now()}_${file.name}`; // No usamos user.id porque no hay user_id
+
+    // 1. Subir imagen al storage
+    const { data: storageData, error: storageError } = await supabaseCliente.storage
+      .from('posts') // nombre del bucket en Supabase Storage
+      .upload(fileName, file);
+
+    if (storageError) {
+      console.error("Error al subir imagen:", storageError.message);
+      return;
+    }
+
+    // 2. Obtener la URL pública
+    const { data: publicUrlData } = supabaseCliente
+      .storage
+      .from('posts')
+      .getPublicUrl(fileName);
+
+    const imageUrl = publicUrlData.publicUrl;
+
+    // 3. Insertar post en la base de datos
+    const { error: insertError } = await supabaseCliente
+      .from('posts')
+      .insert([{
+        comment: comment,        // 👈 campo correcto
+        image_url: imageUrl      // 👈 campo correcto
+      }]);
+
+    if (insertError) {
+      console.error("Error al guardar post:", insertError.message);
+      return;
+    }
+
+    document.getElementById('commentInput').value = '';
+    document.getElementById('photoInput').value = '';
+
+    await displayPosts();
+  });
+
+  async function displayPosts() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
+
+    const { data: posts, error } = await supabaseCliente
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error("Error al cargar posts:", error.message);
+      return;
+    }
+
+    posts.forEach(post => {
+      const div = document.createElement('div');
+      div.className = "post";
+      div.innerHTML = `
+        <img src="${post.image_url}" alt="Imagen del post">
+        <p>${post.comment}</p>
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span class="like-count">0</span></button>
+          <div class="comment-section">
+            <input type="text" class="comment-input" placeholder="Escribe un comentario...">
+            <button class="comment-btn">Comentar</button>
+            <ul class="comments-list"></ul>
+          </div>
+        </div>
+      `;
+
+      // Likes (temporales en local)
+      const likeBtn = div.querySelector('.like-btn');
+      const likeCount = div.querySelector('.like-count');
+      let count = 0;
+      likeBtn.addEventListener('click', () => {
+        count++;
+        likeCount.textContent = count;
+      });
+
+      // Comentarios (temporales en local)
+      const commentBtn = div.querySelector('.comment-btn');
+      const commentInput = div.querySelector('.comment-input');
+      const commentsList = div.querySelector('.comments-list');
+
+      commentBtn.addEventListener('click', () => {
+        const text = commentInput.value.trim();
+        if (text !== "") {
+          const li = document.createElement('li');
+          li.textContent = text;
+          commentsList.appendChild(li);
+          commentInput.value = "";
+        }
+      });
+
+      feed.appendChild(div);
+    });
+  }
+
+  // Mostrar posts al cargar
+  displayPosts();
+
 
 
 
@@ -502,7 +539,7 @@ commentBtn.addEventListener('click', () => {
 
 
 
-    <!-- SECCIÓN DE MENSAJES PRIVADOS 
+    <!-- SECCIÓN DE MENSAJES PRIVADOS -->
 <div class="private-messages-container">
   <h3>Mensajes privados</h3>
   <div id="chatUsersList" class="chat-users-list"></div>
@@ -514,7 +551,7 @@ commentBtn.addEventListener('click', () => {
     <button id="sendMessageBtn">Enviar</button>
   </div>
 </div>
--->
+
 
 
     <script type="module">

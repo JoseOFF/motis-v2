@@ -111,7 +111,7 @@
 
       // Verificar si el nombre de usuario ya existe
       const { data: usuariosPorNombre, error: errorNombre } = await supabaseCliente
-        .from('Usuarios')
+        .from('usuarios')
         .select('nombre_usuario')
         .eq('nombre_usuario', nombre_usuario);
 
@@ -128,7 +128,7 @@
 
       // Verificar si el correo ya existe
       const { data: usuariosPorCorreo, error: errorCorreo } = await supabaseCliente
-        .from('Usuarios')
+        .from('usuarios')
         .select('correo')
         .eq('correo', correo);
 
@@ -145,7 +145,7 @@
 
       // Insertar nuevo usuario en la tabla
       const { error: errorInsert } = await supabaseCliente
-        .from('Usuarios')
+        .from('usuarios')
         .insert([{ nombre_usuario, contrasena, correo }]);
 
       if (errorInsert) {

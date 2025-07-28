@@ -299,8 +299,9 @@ footer {
                 <figure>
                    <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
                 </figure>
+                  <!-- Nombre de usuario estático -->
                 <li style="color:#fff; cursor:default;">
-                    <span class="all-tittles">Admin Name</span>
+                    <span class="all-tittles" id="nombreUsuario">Admin Name</span>
                 </li>
                 <li  class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
                     <i class="zmdi zmdi-power"></i>
@@ -550,8 +551,36 @@ footer {
 
   showSection(currentIndex);
 
+  // Código para manejar sesión y mostrar usuario en la interfaz
+document.addEventListener('DOMContentLoaded', () => {
+  // Obtener datos de usuario guardados en localStorage
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  if (!usuario) {
+    // Si no hay usuario logueado, redirigir a index (login)
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Cambiar solo el nombre mostrado del usuario en el menú superior
+  const nombreElem = document.getElementById('nombreUsuario');
+  if (nombreElem) {
+    nombreElem.textContent = usuario.nombre_usuario || 'Usuario';
+  }
+
+  // Botón para cerrar sesión y borrar datos de usuario en localStorage
+  const logoutBtn = document.querySelector('.exit-system-button');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('usuario');
+      window.location.href = 'index.html';
+    });
+  }
+});
+
   
 </script>
+
+
 
   <!-- Botón flotante para cambiar ventana -->
   <div class="boton-flotante" id="btnSiguiente" title="Siguiente sección">👉</div>

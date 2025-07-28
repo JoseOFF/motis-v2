@@ -209,12 +209,13 @@
       const contrasena = document.getElementById('contrasena').value.trim();
 
       // Consulta a la tabla 'usuarios' en Supabase para verificar credenciales
-      const { data, error } = await supabaseCliente
-        .from('usuarios')
-        .select('*')
-        .eq('nombre_usuario', usuario)
-        .eq('contrasena', contrasena)
-        .maybeSingle(); // Retorna un solo registro o null
+     // Busca un usuario cuyo nombre de usuario o correo coincida, y contraseña también coincida
+    const { data, error } = await supabaseCliente
+      .from('usuarios')
+      .select('*')
+      .or(`nombre_usuario.eq.${usuario},correo.eq.${usuario}`)
+      .eq('contrasena', contrasena)
+      .maybeSingle(); // Solo un resultado esperado
 
       // Manejo de errores de conexión
       if (error) {
@@ -237,5 +238,6 @@
     // Exponer la función validarLogin para que el formulario pueda usarla
     window.validarLogin = validarLogin;
   </script>
+
 </body>
 </html>

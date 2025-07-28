@@ -676,144 +676,189 @@
         <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
         <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
 
+
+
         <!-- Módulos JS y lógica para base de datos -->
-        <script type="module">
-          import { supabaseCliente } from './supabase-init.js';
+  <script type="module">
+  import { supabaseCliente } from './supabase-init.js';
 
-          // Obtener usuario guardado en localStorage
-          const user = JSON.parse(localStorage.getItem("usuario"));
+  const user = JSON.parse(localStorage.getItem("usuario"));
+  if (!user) window.location.href = "sesion.html";
 
-          // Si no hay usuario, redirigir a página de sesión
-          if (!user) {
-            window.location.href = "sesion.html";
-          }
+  document.getElementById('postForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-          // Evento submit para el formulario de publicación de posts
-          document.getElementById('postForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
+    const file = document.getElementById('photoInput').files[0];
+    const comment = document.getElementById('commentInput').value.trim();
+    if (!file || !comment) return;
 
-            // Obtener archivo seleccionado e input de texto
-            const file = document.getElementById('photoInput').files[0];
-            const comment = document.getElementById('commentInput').value.trim();
+    const loader = document.getElementById('loader');
+    loader.style.display = 'block';
 
-            // Si falta alguno, no continuar
-            if (!file || !comment) return;
+    const fileName = `${Date.now()}_${file.name}`;
 
-            // Mostrar loader mientras se publica
-            const loader = document.getElementById('loader');
-            loader.style.display = 'block';
+    try {
+      const { data: storageData, error: storageError } = await supabaseCliente
+        .storage.from('posts')
+        .upload(fileName, file);
 
-            // Generar nombre único para archivo con timestamp
-            const fileName = `${Date.now()}_${file.name}`;
+      if (storageError) throw new Error(storageError.message);
 
-            try {
-              // Subir archivo a storage de supabase
-              const { data: storageData, error: storageError } = await supabaseCliente.storage
-                .from('posts')
-                .upload(fileName, file);
+      const { data: publicUrlData } = supabaseCliente
+        .storage.from('posts')
+        .getPublicUrl(fileName);
 
-              // Si error, lanzar excepción
-              if (storageError) throw new Error(storageError.message);
+      const imageUrl = publicUrlData.publicUrl;
 
-              // Obtener URL pública de la imagen subida
-              const { data: publicUrlData } = supabaseCliente
-                .storage
-                .from('posts')
-                .getPublicUrl(fileName);
+      const { error: insertError } = await supabaseCliente
+        .from('posts')
+        .insert([{ comment: comment, image_url: imageUrl }]);
 
-              const imageUrl = publicUrlData.publicUrl;
+      if (insertError) throw new Error(insertError.message);
 
-              // Insertar registro en tabla posts con comentario e imagen
-              const { error: insertError } = await supabaseCliente
-                .from('posts')
-                .insert([{ comment: comment, image_url: imageUrl }]);
+      document.getElementById('commentInput').value = '';
+      document.getElementById('photoInput').value = '';
+      await displayPosts();
 
-              if (insertError) throw new Error(insertError.message);
+    } catch (err) {
+      console.error("Error al publicar:", err.message);
+      alert("Error al publicar. Intenta de nuevo.");
+    } finally {
+      loader.style.display = 'none';
+    }
+  });
 
-              // Limpiar inputs después de publicar
-              document.getElementById('commentInput').value = '';
-              document.getElementById('photoInput').value = '';
+  async function displayPosts() {
+    const feed = document.getElementById('feed');
+    feed.innerHTML = '';
 
-              // Refrescar posts (función externa, asumo definida en otro lado)
-              await displayPosts();
+    const { data: posts, error } = await supabaseCliente
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-            } catch (err) {
-              // Mostrar error en consola y alerta
-              console.error("Error al publicar:", err.message);
-              alert("Error al publicar. Intenta de nuevo.");
-            } finally {
-              // Ocultar loader
-              loader.style.display = 'none';
-            }
-          });
-       async function displayPosts() {
-  // Obtener el contenedor donde se mostrarán los posts
-  const feed = document.getElementById('feed');
-  feed.innerHTML = ''; // Limpiar contenido previo
+    if (error) {
+      console.error("Error al cargar posts:", error.message);
+      return;
+    }
 
-  // Obtener posts desde la base de datos supabase ordenados por fecha descendente
-  const { data: posts, error } = await supabaseCliente
-    .from('posts')
-    .select('*')
-    .order('created_at', { ascending: false });
+    for (const post of posts) {
+      const div = document.createElement('div');
+      div.className = "post";
+      div.innerHTML = `
+        <img src="${post.image_url}" alt="Imagen del post">
+        <p>${post.comment}</p>
+        <div class="post-actions">
+          <button class="like-btn">❤️ <span class="like-count">0</span></button>
+          <div class="comment-section">
+            <input type="text" class="comment-input" placeholder="Escribe un comentario...">
+            <button class="comment-btn">Comentar</button>
+            <ul class="comments-list"></ul>
+          </div>
+        </div>
+      `;
 
-  if (error) {
-    // Si ocurre un error al obtener posts, mostrar en consola y salir
-    console.error("Error al cargar posts:", error.message);
-    return;
+      const likeBtn = div.querySelector('.like-btn');
+      const likeCount = div.querySelector('.like-count');
+
+      const { data: existingLike } = await supabaseCliente
+        .from('likes')
+        .select('*')
+        .eq('post_id', post.id)
+        .eq('user_id', user.id)
+        .maybeSingle();
+        
+
+      let liked = !!existingLike;
+      const totalLikes = await contarLikes(post.id);
+      likeCount.textContent = totalLikes;
+      likeBtn.classList.toggle('liked', liked);
+
+
+      likeBtn.addEventListener('click', async () => {
+      if (liked) {
+        await supabaseCliente
+          .from('likes')
+          .delete()
+          .match({ post_id: post.id, user_id: user.id });
+        liked = false;
+      } else {
+        await supabaseCliente
+          .from('likes')
+          .insert([{ post_id: post.id, user_id: user.id }]);
+        liked = true;
+      }
+      const newTotal = await contarLikes(post.id);
+      likeCount.textContent = newTotal;
+      likeBtn.classList.toggle('liked', liked);
+    });
+
+
+      const commentBtn = div.querySelector('.comment-btn');
+      const commentInput = div.querySelector('.comment-input');
+      const commentsList = div.querySelector('.comments-list');
+
+      commentBtn.addEventListener('click', async () => {
+        const text = commentInput.value.trim();
+        if (text === "") return;
+
+        const { error: insertError } = await supabaseCliente
+          .from('comentarios')
+          .insert([{ post_id: post.id, user_id: user.id, comentario: text }]);
+
+        if (insertError) {
+          console.error("Error al comentar:", insertError.message);
+          alert("Error al comentar");
+          return;
+        }
+
+        commentInput.value = '';
+        await cargarComentarios(post.id, commentsList);
+      });
+
+      await cargarComentarios(post.id, commentsList);
+      feed.appendChild(div);
+    }
   }
 
-  // Por cada post recibido crear el bloque HTML correspondiente
-  posts.forEach(post => {
-    const div = document.createElement('div');
-    div.className = "post"; // Clase CSS para estilo del post
+  async function contarLikes(postId) {
+    const { count, error } = await supabaseCliente
+      .from('likes')
+      .select('*', { count: 'exact', head: true })
+      .eq('post_id', postId);
+    return count || 0;
+  }
 
-    // Estructura interna del post, con imagen, comentario y acciones
-    div.innerHTML = `
-      <img src="${post.image_url}" alt="Imagen del post">
-      <p>${post.comment}</p>
-      <div class="post-actions">
-        <button class="like-btn">❤️ <span class="like-count">0</span></button>
-        <div class="comment-section">
-          <input type="text" class="comment-input" placeholder="Escribe un comentario...">
-          <button class="comment-btn">Comentar</button>
-          <ul class="comments-list"></ul>
-        </div>
-      </div>
-    `;
 
-    // Funcionalidad de "Likes" (solo local, no persistente)
-    const likeBtn = div.querySelector('.like-btn');
-    const likeCount = div.querySelector('.like-count');
-    let count = 0; // Contador inicial de likes
-    likeBtn.addEventListener('click', () => {
-      count++;
-      likeCount.textContent = count; // Actualizar contador visual
+    async function cargarComentarios(postId, listElement) {
+    listElement.innerHTML = '';
+    const { data: comentarios, error } = await supabaseCliente
+      .from('comentarios')
+      .select(`
+        comentario,
+        user_id,
+        usuarios (nombre_usuario)
+      `)
+      .eq('post_id', postId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      console.error("Error al cargar comentarios:", error.message);
+      return;
+    }
+
+    comentarios.forEach(c => {
+      const li = document.createElement('li');
+      const nombre = c.usuarios?.nombre_usuario || 'Anónimo';
+      li.innerHTML = `<strong>${nombre}:</strong> ${c.comentario}`;
+      listElement.appendChild(li);
     });
+  }
 
-    // Funcionalidad para agregar comentarios (solo local, no persistente)
-    const commentBtn = div.querySelector('.comment-btn');
-    const commentInput = div.querySelector('.comment-input');
-    const commentsList = div.querySelector('.comments-list');
 
-    commentBtn.addEventListener('click', () => {
-      const text = commentInput.value.trim();
-      if (text !== "") {
-        // Crear elemento li con el comentario y agregar a la lista
-        const li = document.createElement('li');
-        li.textContent = text;
-        commentsList.appendChild(li);
-        commentInput.value = ""; // Limpiar input tras comentar
-      }
-    });
+  displayPosts();
 
-    // Añadir el post generado al contenedor principal
-    feed.appendChild(div);
-  });
-}
 
-// Ejecutar la función para mostrar posts al cargar la página
-displayPosts();
 
 // Inicializar chatbot Botpress cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {

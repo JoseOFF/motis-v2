@@ -19,7 +19,9 @@ html, body {
     width: 100%;
     font-size: 16px;
     font-family: "Parrafos" !important;
-    background-color: #fff;
+   
+    background-color: #141e30 !important;
+    color: white !important;
 }
 .media-hover{padding: 7px; border-radius: 4px;}
 .media-hover:hover{ background-color: #F5F5F5; }
@@ -43,7 +45,7 @@ span.label-mhover{
 }
 .full-cover-background{
     background-attachment: fixed;
-    background-color: #fff;
+    background-color: transparent; /* para respetar fondo del gradiente o imagen */
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -284,7 +286,8 @@ select.material-control-login:hover{
     position: relative;
     z-index: 1;
     width: 100%;
-    background-color: #fff;
+    background-color: transparent; /* para que respete contenedor padre */
+    color: white;
     padding-left: 300px;
     box-sizing: border-box;
 }

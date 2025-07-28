@@ -1,29 +1,32 @@
-<!-- 
-* Copyright 2018 Carlos Eduardo Alfaro Orellana
--->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <title>Reconocimiento de notas</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="assets/img/logo.png" type="image/png">    <script src="js/sweet-alert.min.js"></script>
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+
+    <!-- Librerías y hojas de estilo -->
+    <script src="js/sweet-alert.min.js"></script>
     <link rel="stylesheet" href="css/sweet-alert.css">
     <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- jQuery con fallback -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+
+    <!-- Otros scripts -->
     <script src="js/modernizr.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script src="js/main.js"></script>
 
-
+    <!-- Estilos personalizados -->
     <style>
-        /* Estilo para centrar la sección de reconocimiento de notas */
         .note-container {
             background-color: #333;
             border-radius: 15px;
@@ -85,358 +88,360 @@
             100% { transform: scale(1); }
         }
 
-        /* Estilo para el canvas */
         #waveform {
             width: 100%;
             height: 150px;
             background-color: #000;
             border-radius: 10px;
             margin-top: 20px;
-
-        
         }
 
         p {
-  color: #ffffff; /* Cambia este color al que prefieras */
-}
-
+            color: #ffffff;
+        }
     </style>
 </head>
-    
-</head>
+    <!-- Menú lateral -->
+    <!-- Código del menú lateral, encabezado y navegación superior -->
+     <body>
+    <div class="navbar-lateral full-reset"> <!-- Contenedor del menú lateral izquierdo -->
+        <div class="visible-xs font-movile-menu mobile-menu-button"></div> <!-- Botón del menú en vista móvil -->
 
-<body>
-    <div class="navbar-lateral full-reset">
-        <div class="visible-xs font-movile-menu mobile-menu-button"></div>
-        <div class="full-reset container-menu-movile nav-lateral-scroll">
-            <div class="logo full-reset all-tittles">
-                <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
-                PlayBass!
+        <div class="full-reset container-menu-movile nav-lateral-scroll"> <!-- Contenedor desplazable del menú lateral -->
+
+            <div class="logo full-reset all-tittles"> <!-- Logo del menú -->
+                <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" 
+                   style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> <!-- Botón cerrar en móviles -->
+                PlayBass! <!-- Texto del logo -->
             </div>
-            <div class="nav-lateral-divider full-reset"></div>
-            <div class="full-reset" style="padding: 10px 0; color:#fff;">
+
+            <div class="nav-lateral-divider full-reset"></div> <!-- Línea divisoria -->
+
+            <div class="full-reset" style="padding: 10px 0; color:#fff;"> <!-- Sección del logo visual -->
                 <figure>
-                    <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
+                    <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;"> <!-- Logo -->
                 </figure>
-                <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p>
+                <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p> <!-- Título del menú -->
             </div>
-            <div class="nav-lateral-divider full-reset"></div>
-            <div class="full-reset nav-lateral-list-menu">
-                <ul class="list-unstyled">
-                    <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
-                    
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +<i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+
+            <div class="nav-lateral-divider full-reset"></div> <!-- Línea divisoria -->
+
+            <div class="full-reset nav-lateral-list-menu"> <!-- Contenedor del listado de menú -->
+                <ul class="list-unstyled"> <!-- Lista sin estilo -->
+
+                    <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li> <!-- Enlace a inicio -->
+
+                    <li> <!-- Sección: Aprende + -->
+                        <div class="dropdown-menu-button">
+                            <i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +
+                            <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i> <!-- Flecha desplegable -->
+                        </div>
                         <ul class="list-unstyled">
                             <li><a href="https://www.songsterr.com/"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&nbsp;&nbsp; Biblioteca de canciones</a></li>
                             <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; Eres nuevo en esto?</a></li>
                         </ul>
                     </li>
 
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                    <li> <!-- Sección: Servicios -->
+                        <div class="dropdown-menu-button">
+                            <i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios 
+                            <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i>
+                        </div>
                         <ul class="list-unstyled">
                             <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
                             <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
-                           
                         </ul>
                     </li>
-                    <li>
-                        <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+
+                    <li> <!-- Sección: Foro y comunidad -->
+                        <div class="dropdown-menu-button">
+                            <i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad 
+                            <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i>
+                        </div>
                         <ul class="list-unstyled">
-                            <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; Contactos</a></li>
-                            <li><a href="teacher.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo docente</a></li>
-                            <li><a href="student.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo estudiante</a></li>
-                            <li><a href="personal.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo personal administrativo</a></li>
+                            <li><a href="vibass.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; ViBass</a></li>
                         </ul>
                     </li>
-                    <li>
-                     
-                    <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li>
+
+                    <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li> <!-- Configuración -->
                 </ul>
             </div>
         </div>
     </div>
-    <div class="content-page-container full-reset custom-scroll-containers">
-        <nav class="navbar-user-top full-reset">
+
+    <div class="content-page-container full-reset custom-scroll-containers"> <!-- Contenedor principal de contenido -->
+
+        <nav class="navbar-user-top full-reset"> <!-- Barra superior del usuario -->
             <ul class="list-unstyled full-reset">
+
                 <figure>
-                   <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
+                   <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box"> <!-- Foto del usuario -->
                 </figure>
+
                 <li style="color:#fff; cursor:default;">
-                    <span class="all-tittles">Admin Name</span>
+                    <span class="all-tittles">Admin Name</span> <!-- Nombre del usuario -->
                 </li>
-                <li  class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
-                    <i class="zmdi zmdi-power"></i>
+
+                <li class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
+                    <i class="zmdi zmdi-power"></i> <!-- Icono para cerrar sesión -->
                 </li>
-                <li  class="tooltips-general search-book-button" data-href="searchbook.html" data-placement="bottom" title="Buscar libro">
-                    <i class="zmdi zmdi-search"></i>
+
+                <li class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
+                    <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i> <!-- Botón de ayuda -->
                 </li>
-                <li  class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
-                    <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i>
-                </li>
+
                 <li class="mobile-menu-button visible-xs" style="float: left !important;">
-                    <i class="zmdi zmdi-menu"></i>
+                    <i class="zmdi zmdi-menu"></i> <!-- Botón para abrir menú lateral en móviles -->
                 </li>
+
                 <li class="desktop-menu-button hidden-xs" style="float: left !important;">
-                    <i class="zmdi zmdi-swap"></i>
+                    <i class="zmdi zmdi-swap"></i> <!-- Botón para alternar el menú en escritorio -->
                 </li>
             </ul>
         </nav>
-        <div class="container">
+
+        <div class="container"> <!-- Contenedor del contenido principal -->
             <div class="page-header">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              <h1 class="all-tittles">Reconocimientode notas <small>Para bajo</small></h1>
+                <h1 class="all-tittles">Reconocimientode notas <small>Para bajo</small></h1> <!-- Título de la página -->
             </div>
         </div>
-        
+     <section class="note-container">
+        <h1 id="mode-title">Nota detectada: <span id="note">🎵</span></h1>
+        <div class="tuner-controls">
+            <button onclick="toggleMode()" id="mode-button">Cambiar a Afinador</button>
+            <button onclick="start()">Comenzar</button>
+            <button onclick="stop()">Detener</button>
+        </div>
 
+        <div id="tuner-section" style="display: none;">
+            <h2>Afinador de Bajo (5 cuerdas)</h2>
+            <div class="string-buttons">
+                <button onclick="selectString('E1', 41.20)">4 Mi (E)</button>
+                <button onclick="selectString('A1', 55.00)">3 La (A)</button>
+                <button onclick="selectString('D2', 73.42)">2 Re (D)</button>
+                <button onclick="selectString('G2', 98.00)">1 Sol (G)</button>
+            </div>
+            <p>Cuerda seleccionada: <strong id="selected-string">Ninguna</strong></p>
+            <p>Diferencia: <strong id="deviation">-- Hz</strong></p>
+            <p id="tuning-status">🎵 Esperando entrada...</p>
+        </div>
 
-      
-  <section class="note-container">
-    <h1 id="mode-title">Nota detectada: <span id="note">🎵</span></h1>
+        <canvas id="waveform" width="800" height="200"></canvas>
 
-    <div class="tuner-controls">
-      <button onclick="toggleMode()" id="mode-button">Cambiar a Afinador</button>
-      <button onclick="start()">Comenzar</button>
-      <button onclick="stop()">Detener</button>
-    </div>
+        <!-- Barra de precisión -->
+        <div id="precision-bar" style="display:none; margin-top: 10px;">
+            <div style="position: relative; height: 20px; background: #ddd; border-radius: 10px;">
+                <div id="indicator" style="position: absolute; top: 0; width: 2px; height: 100%; background: red; left: 50%;"></div>
+            </div>
+            <p style="text-align:center; margin-top:5px;" id="range-feedback">🎯 Ajusta hasta estar en el centro</p>
+        </div>
 
-    <div id="tuner-section" style="display: none;">
-      <h2>Afinador de Bajo (5 cuerdas)</h2>
-      <div class="string-buttons">
-        <button onclick="selectString('B0', 30.87)">Si (B)</button>
-        <button onclick="selectString('E1', 41.20)">Mi (E)</button>
-        <button onclick="selectString('A1', 55.00)">La (A)</button>
-        <button onclick="selectString('D2', 73.42)">Re (D)</button>
-        <button onclick="selectString('G2', 98.00)">Sol (G)</button>
-      </div>
-      <p>Cuerda seleccionada: <strong id="selected-string">Ninguna</strong></p>
-      <p>Diferencia: <strong id="deviation">-- Hz</strong></p>
-      <p id="tuning-status">🎵 Esperando entrada...</p>
-    </div>
+<!--JavaScript-->
+        <!-- Asistente botpress -->
+        <div id="feed"></div>
+        <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+    </section>
 
-    <canvas id="waveform" width="800" height="200"></canvas>
-    <div id="precision-bar" style="display:none; margin-top: 10px;">
-  <div style="position: relative; height: 20px; background: #ddd; border-radius: 10px;">
-    <div id="indicator" style="position: absolute; top: 0; width: 2px; height: 100%; background: red; left: 50%;"></div>
-  </div>
-  <p style="text-align:center; margin-top:5px;" id="range-feedback">🎯 Ajusta hasta estar en el centro</p>
-</div>
+    </section>
 
-     <div id="feed"></div>
-          <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+<script>
+  // Variables principales para audio, canvas y control de estado
+  let audioContext, analyser, dataArray, bufferLength, stream;
+  let isRunning = false;
 
-  </section>
+  const canvas = document.getElementById("waveform");
+  const canvasContext = canvas.getContext("2d");
 
-  <script>
-    let audioContext, analyser, dataArray, bufferLength, stream;
-    let isRunning = false;
-    let canvas = document.getElementById("waveform");
-    let canvasContext = canvas.getContext("2d");
-    let mode = "note";
-    let selectedFreq = null;
-    let selectedStringName = "";
+  let mode = "note"; // Puede ser "note" o "tuner"
+  let selectedFreq = null;
+  let selectedStringName = "";
 
-    function toggleMode() {
-  if (mode === "note") {
-    mode = "tuner";
-    document.getElementById("mode-title").textContent = "Afinador de Bajo";
-    document.getElementById("mode-button").textContent = "Cambiar a Analizador de Notas";
-    document.getElementById("tuner-section").style.display = "block";
-    document.getElementById("precision-bar").style.display = "block"; // Mostrar la barra
-  } else {
-    mode = "note";
-    document.getElementById("mode-title").innerHTML = 'Nota detectada: <span id="note">🎵</span>';
-    document.getElementById("mode-button").textContent = "Cambiar a Afinador";
-    document.getElementById("tuner-section").style.display = "none";
-    document.getElementById("precision-bar").style.display = "none"; // Ocultar la barra
+  // Cambia entre los modos: analizador de notas <-> afinador
+  function toggleMode() {
+    if (mode === "note") {
+      mode = "tuner";
+      document.getElementById("mode-title").textContent = "Afinador de Bajo";
+      document.getElementById("mode-button").textContent = "Cambiar a Analizador de Notas";
+      document.getElementById("tuner-section").style.display = "block";
+      document.getElementById("precision-bar").style.display = "block";
+    } else {
+      mode = "note";
+      document.getElementById("mode-title").innerHTML = 'Nota detectada: <span id="note">🎵</span>';
+      document.getElementById("mode-button").textContent = "Cambiar a Afinador";
+      document.getElementById("tuner-section").style.display = "none";
+      document.getElementById("precision-bar").style.display = "none";
+    }
   }
-}
 
+  // Selecciona una cuerda para afinar (afinador)
+  function selectString(name, freq) {
+    selectedFreq = freq;
+    selectedStringName = name;
+    document.getElementById("selected-string").textContent = name;
+  }
 
-    function selectString(name, freq) {
-      selectedFreq = freq;
-      selectedStringName = name;
-      document.getElementById("selected-string").textContent = name;
+  // Inicia el reconocimiento de audio
+  function start() {
+    if (isRunning) return;
+
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(userStream => {
+        stream = userStream;
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaStreamSource(stream);
+        analyser = audioContext.createAnalyser();
+        source.connect(analyser);
+        analyser.fftSize = 2048;
+
+        bufferLength = analyser.fftSize;
+        dataArray = new Float32Array(bufferLength);
+
+        isRunning = true;
+        detectPitch(); // Inicia la detección continua
+      })
+      .catch(err => alert("Error al acceder al micrófono: " + err));
+  }
+
+  // Detiene la entrada de audio y limpia interfaz
+  function stop() {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
     }
+    isRunning = false;
+    clearCanvas();
+    document.getElementById("note").textContent = "🎵";
+    document.getElementById("tuning-status").textContent = "🎵 Esperando entrada...";
+    document.getElementById("deviation").textContent = "-- Hz";
+  }
 
-    function start() {
-      if (isRunning) return;
+  // Detección de tono principal
+  function detectPitch() {
+    if (!isRunning) return;
 
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(userStream => {
-          stream = userStream;
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          const source = audioContext.createMediaStreamSource(stream);
-          analyser = audioContext.createAnalyser();
-          source.connect(analyser);
-          analyser.fftSize = 2048;
+    analyser.getFloatTimeDomainData(dataArray);
+    const frequency = autoCorrelate(dataArray, audioContext.sampleRate);
 
-          bufferLength = analyser.fftSize;
-          dataArray = new Float32Array(bufferLength);
+    if (frequency !== -1) {
+      if (mode === "note") {
+        // En modo "nota" simplemente mostramos la nota calculada
+        const note = frequencyToNote(frequency);
+        document.getElementById("note").textContent = note;
+      } else if (mode === "tuner" && selectedFreq) {
+        // En modo "afinador" comparamos con frecuencia objetivo
+        const deviation = (frequency - selectedFreq).toFixed(2);
+        const maxDeviation = 50;
+        const deviationValue = frequency - selectedFreq;
 
-          isRunning = true;
-          detectPitch();
-        })
-        .catch(err => alert("Error al acceder al micrófono: " + err));
-    }
+        // Porcentaje para posicionar el indicador (de -50 a +50 Hz)
+        let percent = Math.max(Math.min((deviationValue + maxDeviation) / (2 * maxDeviation), 1), 0);
+        let positionPercent = percent * 100;
+        const indicator = document.getElementById("indicator");
+        indicator.style.left = `${positionPercent}%`;
 
-    function stop() {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
-      isRunning = false;
-      clearCanvas();
-      document.getElementById("note").textContent = "🎵";
-      document.getElementById("tuning-status").textContent = "🎵 Esperando entrada...";
-      document.getElementById("deviation").textContent = "-- Hz";
-    }
-
-    function detectPitch() {
-      if (!isRunning) return;
-
-      analyser.getFloatTimeDomainData(dataArray);
-      const frequency = autoCorrelate(dataArray, audioContext.sampleRate);
-
-      if (frequency !== -1) {
-        if (mode === "note") {
-          const note = frequencyToNote(frequency);
-          document.getElementById("note").textContent = note;
-        } else if (mode === "tuner" && selectedFreq) {
-const deviation = (frequency - selectedFreq).toFixed(2);
-// Visual bar indicator: -50 Hz to +50 Hz scale
-const maxDeviation = 50; // Máxima diferencia visualizada
-let deviationValue = frequency - selectedFreq;
-let percent = Math.max(Math.min((deviationValue + maxDeviation) / (2 * maxDeviation), 1), 0);
-let positionPercent = percent * 100;
-document.getElementById("indicator").style.left = `${positionPercent}%`;
-
-// Cambiar color según precisión
-const indicator = document.getElementById("indicator");
-const feedback = document.getElementById("range-feedback");
-
-if (Math.abs(deviationValue) < 1) {
-  indicator.style.background = "#2ecc71";
-  feedback.textContent = "✅ ¡Perfecto! Nota afinada.";
-} else if (Math.abs(deviationValue) < 5) {
-  indicator.style.background = "#f39c12";
-  feedback.textContent = "🎯 Casi... Ajusta un poco más.";
-} else {
-  indicator.style.background = "#e74c3c";
-  feedback.textContent = "❌ Muy desajustada. Sigue afinando.";
-}
-
-          document.getElementById("deviation").textContent = `${deviation} Hz`;
-
-          if (Math.abs(frequency - selectedFreq) < 1) {
-            document.getElementById("tuning-status").textContent = `✅ ${selectedStringName} afinada`;
-            document.getElementById("tuning-status").style.color = "#2ecc71";
-          } else {
-            document.getElementById("tuning-status").textContent = `🎯 Ajusta: estás en ${frequency.toFixed(2)} Hz`;
-            document.getElementById("tuning-status").style.color = "#e67e22";
-          }
-        }
-      }
-
-      drawWaveform();
-      requestAnimationFrame(detectPitch);
-    }
-
-    function autoCorrelate(buffer, sampleRate) {
-      let SIZE = buffer.length;
-      let MAX_SAMPLES = Math.floor(SIZE / 2);
-      let bestOffset = -1;
-      let bestCorrelation = 0;
-      let rms = 0;
-
-      for (let i = 0; i < SIZE; i++) {
-        let val = buffer[i];
-        rms += val * val;
-      }
-      rms = Math.sqrt(rms / SIZE);
-      if (rms < 0.01) return -1;
-
-      let lastCorrelation = 1;
-      for (let offset = 1; offset < MAX_SAMPLES; offset++) {
-        let correlation = 0;
-        for (let i = 0; i < MAX_SAMPLES; i++) {
-          correlation += Math.abs(buffer[i] - buffer[i + offset]);
-        }
-        correlation = 1 - (correlation / MAX_SAMPLES);
-
-        if (correlation > 0.9 && correlation > lastCorrelation) {
-          bestCorrelation = correlation;
-          bestOffset = offset;
-        }
-        lastCorrelation = correlation;
-      }
-
-      if (bestCorrelation > 0.01) {
-        return sampleRate / bestOffset;
-      }
-      return -1;
-    }
-
-    function frequencyToNote(freq) {
-      const noteStrings = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
-      const A4 = 440;
-      const noteNumber = 12 * (Math.log(freq / A4) / Math.log(2));
-      const noteIndex = Math.round(noteNumber) + 69;
-      const noteName = noteStrings[noteIndex % 12];
-      const octave = Math.floor(noteIndex / 12) - 1;
-      return `${noteName}${octave}`;
-    }
-
-    function drawWaveform() {
-      canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-      let width = canvas.width;
-      let height = canvas.height;
-      let step = Math.floor(dataArray.length / width);
-      let amp = height / 2;
-
-      canvasContext.beginPath();
-      for (let i = 0; i < width; i++) {
-        let sample = dataArray[i * step];
-        let y = (sample * amp) + amp;
-        if (i === 0) {
-          canvasContext.moveTo(i, y);
+        // Colores de precisión y mensaje
+        const feedback = document.getElementById("range-feedback");
+        if (Math.abs(deviationValue) < 1) {
+          indicator.style.background = "#2ecc71";
+          feedback.textContent = "✅ ¡Perfecto! Nota afinada.";
+        } else if (Math.abs(deviationValue) < 5) {
+          indicator.style.background = "#f39c12";
+          feedback.textContent = "🎯 Casi... Ajusta un poco más.";
         } else {
-          canvasContext.lineTo(i, y);
+          indicator.style.background = "#e74c3c";
+          feedback.textContent = "❌ Muy desajustada. Sigue afinando.";
+        }
+
+        document.getElementById("deviation").textContent = `${deviation} Hz`;
+
+        if (Math.abs(deviationValue) < 1) {
+          document.getElementById("tuning-status").textContent = `✅ ${selectedStringName} afinada`;
+          document.getElementById("tuning-status").style.color = "#2ecc71";
+        } else {
+          document.getElementById("tuning-status").textContent = `🎯 Ajusta: estás en ${frequency.toFixed(2)} Hz`;
+          document.getElementById("tuning-status").style.color = "#e67e22";
         }
       }
-      canvasContext.strokeStyle = "#76d7c4";
-      canvasContext.stroke();
     }
 
-    function clearCanvas() {
-      canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    drawWaveform(); // Actualiza gráfico de forma de onda
+    requestAnimationFrame(detectPitch); // Loop continuo
+  }
+
+  // Algoritmo de autocorrelación para detectar la frecuencia fundamental
+  function autoCorrelate(buffer, sampleRate) {
+    const SIZE = buffer.length;
+    const MAX_SAMPLES = Math.floor(SIZE / 2);
+    let bestOffset = -1;
+    let bestCorrelation = 0;
+    let rms = 0;
+
+    for (let i = 0; i < SIZE; i++) {
+      const val = buffer[i];
+      rms += val * val;
     }
-  </script>
-    </body>
+    rms = Math.sqrt(rms / SIZE);
+    if (rms < 0.01) return -1; // Señal demasiado débil
 
+    let lastCorrelation = 1;
+    for (let offset = 1; offset < MAX_SAMPLES; offset++) {
+      let correlation = 0;
+      for (let i = 0; i < MAX_SAMPLES; i++) {
+        correlation += Math.abs(buffer[i] - buffer[i + offset]);
+      }
+      correlation = 1 - (correlation / MAX_SAMPLES);
 
+      if (correlation > 0.9 && correlation > lastCorrelation) {
+        bestCorrelation = correlation;
+        bestOffset = offset;
+      }
+      lastCorrelation = correlation;
+    }
+
+    return bestCorrelation > 0.01 ? sampleRate / bestOffset : -1;
+  }
+
+  // Convierte una frecuencia a su nota musical más cercana (ej. 110Hz -> La2)
+  function frequencyToNote(freq) {
+    const noteStrings = ["Do", "Do♯", "Re", "Re♯", "Mi", "Fa", "Fa♯", "Sol", "Sol♯", "La", "La♯", "Si"];
+    const A4 = 440;
+    const noteNumber = 12 * (Math.log(freq / A4) / Math.log(2));
+    const noteIndex = Math.round(noteNumber) + 69;
+    const noteName = noteStrings[noteIndex % 12];
+    const octave = Math.floor(noteIndex / 12) - 1;
+    return `${noteName}${octave}`;
+  }
+
+  // Dibuja la forma de onda en el canvas (visualizador)
+  function drawWaveform() {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+    const width = canvas.width;
+    const height = canvas.height;
+    const step = Math.floor(dataArray.length / width);
+    const amp = height / 2;
+
+    canvasContext.beginPath();
+    for (let i = 0; i < width; i++) {
+      const sample = dataArray[i * step];
+      const y = (sample * amp) + amp;
+      if (i === 0) {
+        canvasContext.moveTo(i, y);
+      } else {
+        canvasContext.lineTo(i, y);
+      }
+    }
+    canvasContext.strokeStyle = "#76d7c4";
+    canvasContext.stroke();
+  }
+
+  // Limpia el canvas
+  function clearCanvas() {
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  }
+</script>
+</body>
+
+   <!--Footer de la pagina -->
   <div class="modal fade" tabindex="-1" role="dialog" id="ModalHelp">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

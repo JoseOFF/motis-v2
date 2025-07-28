@@ -1,103 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Inicio de sesión</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Importación de librerías y hojas de estilos para el diseño visual -->
-    <script src="js/sweet-alert.min.js"></script>
-    <link rel="stylesheet" href="css/sweet-alert.css">
-    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Importa jQuery desde CDN -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>
-      // Si no se carga jQuery desde CDN, carga una copia local
-      window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')
-    </script>
-    <script src="js/modernizr.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="js/main.js"></script>
-      <!-- SDK de Supabase para conectar con la base de datos -->
+  <!-- Definición de codificación y título -->
+  <meta charset="UTF-8">
+  <title>Inicio de sesión</title>
+  <!-- Configuración para responsividad en dispositivos móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Íconos y hojas de estilo CSS -->
+  <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+  <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/sweet-alert.css">
+
+  <!-- Librerías y scripts -->
+  <script src="js/sweet-alert.min.js"></script>
+  <!-- Cliente oficial de Supabase para conexión con base de datos -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <link rel="icon" href="assets/img/logo.png" type="image/png">
+  <!-- jQuery desde CDN con fallback local -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+  <script src="js/modernizr.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- Estilos CSS personalizados para la página de login -->
+  <style>
+    /* Aplica box-sizing para incluir padding y border en el tamaño total */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Reseteo de márgenes y padding, y fondo claro para toda la página */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #f5f5f5;
+      overflow-x: hidden; /* Evita scroll horizontal */
+    }
+
+    /* Contenedor principal de login con fondo de imagen y centrado del contenido */
+    .login-container {
+      min-height: 100vh; /* Ocupa toda la altura de la ventana */
+      background: url('assets/img/font-login.png') no-repeat center center;
+      background-size: cover;
+      display: flex; /* Flexbox para centrar */
+      justify-content: center; /* Centra horizontalmente */
+      align-items: center; /* Centra verticalmente */
+      padding: 20px;
+    }
+
+    /* Contenedor del formulario con fondo oscuro translúcido y bordes redondeados */
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 40px;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 450px; /* Limita el ancho máximo */
+      color: white;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Estilo para los grupos de input y label */
+    .group-material-login {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    /* Inputs transparentes con borde inferior blanco */
+    .material-login-control {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #fff;
+      width: 100%;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    /* Cambio de borde al enfocar el input */
+    .material-login-control:focus {
+      outline: none;
+      border-bottom: 2px solid #E91E63; /* Rosa fuerte */
+    }
+
+    /* Etiquetas con color gris claro */
+    label {
+      color: #ccc;
+    }
+
+    /* Contenedor de botones con espacio entre ellos */
+    .btn-container {
+      display: flex;
+      justify-content: space-between; /* Botones separados: uno a la izquierda y otro a la derecha */
+      align-items: center;
+      margin-top: 25px;
+    }
+
+    /* Estilo común para botón de login */
+    .btn-login {
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px; /* Espacio entre icono y texto */
+      background-color: #2196F3;
+    }
+
+    /* Cambio de color al pasar el cursor sobre botón login */
+    .btn-login:hover {
+      background-color: #1976D2;
+    }
+
+    /* Estilo común para botón crear cuenta */
+    .btn-crear {
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: #4a1ee9;
+    }
+
+    /* Cambio de color al pasar el cursor sobre botón crear cuenta */
+    .btn-crear:hover {
+      background-color: #C2185B;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Contenedor principal de la página de login -->
-  <div class="login-container full-cover-background">
+  <!-- Contenedor principal del formulario de login -->
+  <div class="login-container">
+    <!-- Caja del formulario con fondo oscuro -->
     <div class="form-container">
-        <!-- Ícono y título de la página -->
-        <p class="text-center" style="margin-top: 17px;">
-           <i class="zmdi zmdi-account-circle zmdi-hc-5x"></i>
-        </p>
-        <h4 class="text-center all-tittles" style="margin-bottom: 30px;">inicia sesión con tu cuenta</h4>
+      <!-- Icono grande de usuario centrado -->
+      <p class="text-center">
+        <i class="zmdi zmdi-account-circle zmdi-hc-5x"></i>
+      </p>
 
-        <!-- Formulario de inicio de sesión. Se usa onsubmit para llamar a la función validarLogin -->
-        <form onsubmit="return validarLogin(event)">
-          <!-- Campo de texto para el nombre de usuario -->
-          <div class="group-material-login">
-            <input type="text" id="usuario" class="material-login-control" required maxlength="70">
-            <span class="highlight-login"></span>
-            <span class="bar-login"></span>
-            <label><i class="zmdi zmdi-account"></i> &nbsp; Nombres</label>
-          </div>
-          <br>
-          <!-- Campo para la contraseña -->
-          <div class="group-material-login">
-            <input type="password" id="contrasena" class="material-login-control" required maxlength="70">
-            <span class="highlight-login"></span>
-            <span class="bar-login"></span>
-            <label><i class="zmdi zmdi-lock"></i> &nbsp; Contraseña</label>
-          </div>
-          <!-- Botón para enviar el formulario -->
-          <button class="btn-login" type="submit">Ingresar al sistema &nbsp; <i class="zmdi zmdi-arrow-right"></i></button>
-           <!-- Botón para enviar el formulario -->
-           <a href="crearUsuario.html" class="btn-login" style="position: absolute; bottom: 20px; left: -200px;"> Crear cuenta &nbsp; <i class="zmdi zmdi-arrow-right"></i>
+      <!-- Título del formulario centrado -->
+      <h4 class="text-center all-tittles" style="margin-bottom: 30px;">Inicia sesión en PlayBass!</h4>
 
+      <!-- Formulario con validación en JavaScript -->
+      <form onsubmit="return validarLogin(event)">
+        <!-- Campo para usuario o correo -->
+        <div class="group-material-login">
+          <input type="text" id="usuario" class="material-login-control" required maxlength="70" />
+          <label><i class="zmdi zmdi-account"></i> &nbsp; Nombre o E-mail</label>
+        </div>
 
-        </form>
-    </div>   
+        <!-- Campo para contraseña -->
+        <div class="group-material-login">
+          <input type="password" id="contrasena" class="material-login-control" required maxlength="70" />
+          <label><i class="zmdi zmdi-lock"></i> &nbsp; Contraseña</label>
+        </div>
+
+        <div>
+          <p></p> <!-- Espacio para mensajes futuros o diseño -->
+        </div>
+
+        <!-- Contenedor de botones: iniciar sesión y crear cuenta -->
+        <div class="btn-container">
+          <!-- Botón de envío para iniciar sesión -->
+          <button type="submit" class="btn-crear">
+            <i class="zmdi zmdi-arrow-right"></i>Iniciar Sesión
+          </button>
+
+          <!-- Enlace para crear una nueva cuenta -->
+          <a href="crearUsuario.html" class="btn-crear">
+            <i class="zmdi zmdi-account-add"></i> Crear Cuenta
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
 
+  <!-- Script para validar login con Supabase -->
+  <script type="module">
+    // Importa el cliente de Supabase inicializado en otro archivo
+    import { supabaseCliente } from './supabase-init.js';
 
-<!-- Este debe ser cargado dentro de un módulo -->
-<script type="module">
-  import { supabaseCliente } from './supabase-init.js';
+    // Función asincrónica que valida el inicio de sesión
+    async function validarLogin(event) {
+      event.preventDefault(); // Evita que el formulario se envíe tradicionalmente
 
-  async function validarLogin(event) {
-    event.preventDefault();
+      // Obtiene los valores ingresados en el formulario
+      const usuario = document.getElementById('usuario').value.trim();
+      const contrasena = document.getElementById('contrasena').value.trim();
 
-    const usuario = document.getElementById('usuario').value.trim();
-    const contrasena = document.getElementById('contrasena').value.trim();
-
-      // Consulta a Supabase para validar credenciales
+      // Consulta a la tabla 'usuarios' en Supabase para verificar credenciales
       const { data, error } = await supabaseCliente
         .from('usuarios')
         .select('*')
         .eq('nombre_usuario', usuario)
         .eq('contrasena', contrasena)
-        .maybeSingle();
+        .maybeSingle(); // Retorna un solo registro o null
 
-    if (error) {
-      console.error('Error al conectar con Supabase:', error.message);
-      swal("Error", "Hubo un problema al conectar con la base de datos", "error");
-    } else if (!data) {
-      swal("Error", "Usuario o contraseña incorrectos", "error");
-    } else {
-      localStorage.setItem('usuario', JSON.stringify(data));
-      window.location.href = "home.html";
+      // Manejo de errores de conexión
+      if (error) {
+        console.error('Error al conectar con Supabase:', error.message);
+        swal("Error", "Hubo un problema al conectar con la base de datos", "error");
+      } 
+      // Usuario no encontrado o credenciales incorrectas
+      else if (!data) {
+        swal("Error", "Usuario o contraseña incorrectos", "error");
+      } 
+      // Login exitoso
+      else {
+        // Guarda la información del usuario en localStorage
+        localStorage.setItem('usuario', JSON.stringify(data));
+        // Redirige a la página principal después del login
+        window.location.href = "home.html";
+      }
     }
-  }
 
-  // Hacer global la función (si el formulario la necesita por el atributo `onsubmit`)
-  window.validarLogin = validarLogin;
-</script>
-
-
+    // Exponer la función validarLogin para que el formulario pueda usarla
+    window.validarLogin = validarLogin;
+  </script>
 </body>
 </html>

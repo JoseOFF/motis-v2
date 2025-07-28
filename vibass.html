@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>ViBass!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/img/logo.png" type="image/png">
+    <!-- Estilos y librerías -->
+    <link rel="stylesheet" href="css/sweet-alert.css">
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="js/modernizr.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/sweet-alert.min.js"></script>
+    <style>
+
+      /* Estilos generales del body */
+body {
+  background: #121212; /* Fondo oscuro tipo modo nocturno */
+  color: rgb(10, 10, 10); /* Color del texto */
+  font-family: Arial, sans-serif; /* Tipografía principal */
+  margin: 0; 
+  padding: 20px;
+
+  /* Centrado vertical y horizontal del contenido */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
+  min-height: 100vh; /* Altura mínima de toda la pantalla */
+}
+
+/* Estilo del título principal */
+h1 {
+  margin-bottom: 20px;
+}
+
+/* Contenedor del input para subir archivos */
+#uploadContainer {
+  margin-bottom: 20px;
+}
+
+/* Estilo del input tipo file (oculto visualmente, pero estilizado si se mostrara) */
+input[type="file"] {
+  color: white;
+  background: #222;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Contenedor principal del slider de videos */
+.slider-container {
+  width: 400px;
+  max-width: 80vw;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #222;
+  box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  position: relative;
+  user-select: none;
+  justify-content: center; 
+}
+
+/* Contenedor interno que agrupa los slides */
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+/* Cada slide de video individual */
+.slide {
+  flex-shrink: 0;
+  width: 400px;
+  height: calc(400px * 16 / 9); /* Mantiene relación 16:9 */
+  border-radius: 12px;
+  overflow: hidden;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo de los videos dentro del slide */
+.slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Recorta video sin distorsionar */
+  border-radius: 12px;
+  display: block;
+}
+
+/* Botones para navegación (izquierda y derecha) */
+.btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.3);
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.8em;
+  color: white;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.6);
+}
+
+.btn-left {
+  left: 8px;
+}
+
+.btn-right {
+  right: 8px;
+}
+
+/* Contenedor del icono de like y contador */
+#likeContainer {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Icono de corazón */
+#likeIcon {
+  font-size: 2em;
+  color: #888;
+  transition: color 0.3s ease;
+  margin-right: 10px;
+}
+
+/* Estilo cuando está activo (like dado) */
+#likeIcon.liked {
+  color: #e74c3c;
+}
+
+/* Sección de comentarios */
+#commentsSection {
+  margin-top: 20px;
+  width: 400px;
+  max-width: 90vw;
+}
+
+/* Lista de comentarios */
+#commentsList {
+  max-height: 150px;
+  overflow-y: auto;
+  background: #333;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.9em;
+}
+
+/* Comentario individual */
+.comment {
+  border-bottom: 1px solid #555;
+  padding: 5px 0;
+}
+
+/* Formulario para enviar comentarios */
+#commentForm {
+  margin-top: 10px;
+  display: flex;
+}
+
+/* Input de comentario */
+#commentInput {
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 6px 0 0 6px;
+  border: none;
+  outline: none;
+}
+
+/* Botón de envío de comentario */
+#commentSubmit {
+  padding: 8px 15px;
+  background: #e74c3c;
+  border: none;
+  color: white;
+  border-radius: 0 6px 6px 0;
+  cursor: pointer;
+}
+
+#commentSubmit:hover {
+  background: #c0392b;
+}
+
+/* Mensaje cuando no hay videos */
+#emptyMessage {
+  color: #bbb;
+  margin-top: 40px;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 440px) {
+  .slider-container, #commentsSection {
+    width: 90vw;
+  }
+}
+
+/* Controles de video (parte inferior del video) */
+.video-controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* Icono centrado (ej. play/pause) */
+.video-center-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3em;
+  color: white;
+  opacity: 0.7;
+  display: none;
+  pointer-events: none;
+}
+
+/* Barra de progreso del video */
+.video-progress-container {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Progreso activo */
+.video-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #e74c3c;
+  border-radius: 4px;
+}
+
+/* Contenedor general de progreso */
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Barra interior de progreso */
+.progress {
+  height: 100%;
+  background: #ff3e3e;
+  width: 0%;
+  border-radius: 3px;
+}
+
+/* Punto móvil del progreso */
+.progress-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Contenedor de la página, compensa el menú lateral */
+.content-page-container {
+  margin-left: 250px; 
+  padding: 20px;
+}
+
+/* Contenido principal centrado */
+.main-centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ----------- PANEL LATERAL DERECHO (CHAT) ----------- */
+.private-messages-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 83vh;
+  width: 300px;
+  background-color: #313030;
+  border-left: 1px solid #312e2e;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  margin-bottom: 80px;  
+}
+
+/* Título del panel */
+.private-messages-container h3 {
+  margin-top: 0;
+  font-size: 18px;
+  text-align: center;
+  color: #e7e7e7;
+  user-select: none;
+}
+
+/* Lista de usuarios del chat */
+.chat-users-list {
+  background-color: rgb(85, 79, 79);
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  font-family: Helvetica, Arial, sans-serif;
+  margin-bottom: 10px;
+}
+
+/* Usuario individual */
+.chat-user {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: white;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease;
+  user-select: none;
+}
+
+.chat-user:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background-color: #f0f2f5;
+}
+
+.chat-user.selected {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  background-color: #e2e6ea;
+}
+
+.chat-user img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.chat-user .username {
+  font-size: 15px;
+  font-weight: 500;
+  color: #050505;
+  text-align: left;
+}
+
+/* Ventana de conversación */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  background: #f0f2f5;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+/* Encabezado del chat */
+.chat-header {
+  background-color: #1877f2;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* Contenedor de mensajes del chat */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  padding-bottom: 85px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fff;
+}
+
+.chat-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Estilo general de los mensajes */
+.chat-message {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Mensaje recibido */
+.chat-message.contact {
+  background-color: #fdd0e9;
+  color: #333;
+  align-self: flex-start;
+  border-radius: 4px 20px 20px 4px;
+}
+
+/* Mensaje enviado */
+.chat-message.user {
+  background-color: #1877f2;
+  color: white;
+  align-self: flex-end;
+  border-radius: 20px 4px 4px 20px;
+}
+
+/* Contenedor del input de chat */
+.chat-input-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  padding: 15px;
+  background-color: white;
+  border-top: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Input de texto del chat */
+#chatInput {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 14px;
+  outline: none;
+}
+
+#chatInput:focus {
+  border-color: #1877f2;
+  box-shadow: 0 0 5px #1877f2aa;
+}
+
+/* Botón de enviar mensaje */
+#sendMessageBtn {
+  margin-left: 10px;
+  padding: 10px 15px;
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#sendMessageBtn:hover {
+  background-color: #da2a73;
+}
+
+/* Botón para cerrar el chat */
+.close-chat-btn {
+  position: absolute;
+  top: 17px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.close-chat-btn:hover {
+  color: #ffd1dc;
+}
+
+</style>
+</head>
+
+
+
+<body>
+<!-- Menú lateral -->
+<div class="navbar-lateral full-reset">
+    <!-- Botón para mostrar el menú en móviles -->
+    <div class="visible-xs font-movile-menu mobile-menu-button"></div>
+
+    <!-- Contenedor del menú lateral con scroll -->
+    <div class="full-reset container-menu-movile nav-lateral-scroll">
+
+        <!-- Logo superior con botón para cerrar en móviles -->
+        <div class="logo full-reset all-tittles">
+            <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button"
+               style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
+            PlayBass!
+        </div>
+
+        <!-- Separador visual -->
+        <div class="nav-lateral-divider full-reset"></div>
+
+        <!-- Imagen del logo + descripción -->
+        <div class="full-reset" style="padding: 10px 0; color:#fff;">
+            <figure>
+                <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
+            </figure>
+            <p class="text-center" style="padding-top: 15px;">Menú de PlayBass!</p>
+        </div>
+
+        <!-- Segundo separador -->
+        <div class="nav-lateral-divider full-reset"></div>
+
+        <!-- Lista de opciones del menú -->
+        <div class="full-reset nav-lateral-list-menu">
+            <ul class="list-unstyled">
+                <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
+
+                <!-- Submenú: Aprende + -->
+                <li>
+                    <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +<i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.songsterr.com/"><i class="zmdi zmdi-book zmdi-hc-fw"></i>&nbsp;&nbsp; Biblioteca de canciones</a></li>
+                        <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; ¿Eres nuevo en esto?</a></li>
+                    </ul>
+                </li>
+
+                <!-- Submenú: Servicios -->
+                <li>
+                    <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                    <ul class="list-unstyled">
+                        <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
+                        <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
+                    </ul>
+                </li>
+
+                <!-- Submenú: Foro y comunidad -->
+                <li>
+                    <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
+                    <ul class="list-unstyled">
+                        <li><a href="vibass.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; ViBass</a></li>
+                    </ul>
+                </li>
+
+                <!-- Opción: Configuraciones -->
+                <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Contenido centrado principal -->
+<div class="main-centered-content">
+
+  <!-- Contenedor del botón para subir videos -->
+  <div id="uploadContainer">
+    <label for="videoUploader" style="cursor: pointer; display: inline-block; padding: 10px 20px; background-color: #e74c3c; color: white; border-radius: 6px;">
+      📹 Subir videos
+    </label>
+    <!-- Input oculto para subir múltiples archivos de video -->
+    <input type="file" id="videoUploader" accept="video/*" multiple style="display: none;" />
+  </div>
+
+  <!-- Slider de videos (inicialmente oculto) -->
+  <div class="slider-container" id="sliderContainer" style="display:none;">
+    <div class="slider-wrapper" id="sliderWrapper">
+      <!-- Aquí se insertan dinámicamente los slides de video -->
+    </div>
+    <!-- Botones para moverse entre videos -->
+    <button class="btn btn-left" id="btnLeft">&#8592;</button>
+    <button class="btn btn-right" id="btnRight">&#8594;</button>
+  </div>
+
+  <!-- Contenedor de likes (inicialmente oculto) -->
+  <div id="likeContainer" style="display:none;">
+    <span id="likeIcon" title="Like">&#10084;</span>
+    <span id="likeCount">0</span> Likes
+  </div>
+
+  <!-- Sección de comentarios (inicialmente oculta) -->
+  <div id="commentsSection" style="display:none;">
+    <div id="commentsList"></div>
+    <!-- Formulario para enviar un nuevo comentario -->
+    <form id="commentForm">
+      <input type="text" id="commentInput" placeholder="Escribe un comentario..." autocomplete="off" required />
+      <button type="submit" id="commentSubmit">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Mensaje de estado cuando no hay videos -->
+  <div id="emptyMessage">No hay videos cargados</div>
+
+</div>
+
+<!-- Capa de carga que se muestra mientras se cargan los videos -->
+<div id="loadingOverlay" style="
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+">
+  <!-- GIF de carga -->
+  <img src="assets/img/cagado.gif" alt="Cargando..." style="width: 80px; height: 80px;" />
+  <p style="color: white; margin-top: 15px;">Cargando video...</p>
+</div>
+
+<!-- Contenedor para mensajería privada -->
+<div class="private-messages-container">
+  <h3>Tus contactos</h3>
+  
+  <!-- Lista de usuarios con los que se puede chatear -->
+  <div id="chatUsersList" class="chat-users-list">
+    <!-- Se insertan dinámicamente -->
+  </div>
+
+  <!-- Ventana de chat (inicialmente oculta) -->
+  <div id="chatWindow" class="chat-window" style="display: none;">
+    
+    <!-- Encabezado del chat (usuario con el que se chatea) -->
+    <div class="chat-header">
+      <h4 id="chatWith"></h4>
+    </div>
+
+    <!-- Contenedor principal del cuerpo del chat -->
+    <div class="chat-body">
+      <div id="chatMessages" class="chat-messages"></div>
+
+      <!-- Contenedor para escribir y enviar mensajes -->
+      <div class="chat-input-container">
+        <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+        <button id="sendMessageBtn">Enviar</button>
+      </div>
+    </div>
+
+    <!-- Encabezado adicional con botón para cerrar el chat -->
+    <div class="chat-header">
+      <h4 id="chatWith"></h4>
+      <button class="close-chat-btn" onclick="document.getElementById('chatWindow').style.display='none'">×</button>
+    </div>
+
+    <!-- Indicador visual de carga al enviar un post -->
+    <div id="loader" style="display: none; margin-top: 10px;">
+      <img src="assets/img/loader.gif" alt="Cargando..." style="width: 40px;">
+      <p>Publicando tu post...</p>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  // Referencias a los elementos del DOM
+  const videoUploader = document.getElementById('videoUploader'); // Input para subir videos
+  const sliderContainer = document.getElementById('sliderContainer'); // Contenedor general del slider de videos
+  const sliderWrapper = document.getElementById('sliderWrapper'); // Contenedor interno que se desplaza con los videos
+  const btnLeft = document.getElementById('btnLeft'); // Botón para deslizar hacia la izquierda
+  const btnRight = document.getElementById('btnRight'); // Botón para deslizar hacia la derecha
+  const likeContainer = document.getElementById('likeContainer'); // Contenedor de likes
+  const likeIcon = document.getElementById('likeIcon'); // Icono de "me gusta"
+  const likeCount = document.getElementById('likeCount'); // Contador de "me gusta"
+  const commentsSection = document.getElementById('commentsSection'); // Sección de comentarios
+  const commentsList = document.getElementById('commentsList'); // Lista donde se agregan los comentarios
+  const commentForm = document.getElementById('commentForm'); // Formulario para enviar comentarios
+  const commentInput = document.getElementById('commentInput'); // Input de texto para escribir comentario
+  const emptyMessage = document.getElementById('emptyMessage'); // Mensaje de estado inicial (sin videos)
+  const loadingOverlay = document.getElementById('loadingOverlay'); // Capa de carga cuando se suben videos
+
+  let currentIndex = 0; // Índice actual del video mostrado
+  const videosData = []; // Arreglo para guardar datos de cada video (likes, comentarios)
+
+  // Formatea el tiempo en minutos:segundos
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+  }
+
+  // Actualiza el slider mostrando solo el video en el índice actual
+  function updateSlider() {
+    const slides = sliderWrapper.children;
+    if (slides.length === 0) return;
+
+    const slideWidth = slides[0].offsetWidth;
+    sliderWrapper.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+
+    for (let i = 0; i < slides.length; i++) {
+      const video = slides[i].querySelector('video');
+      if (!video) continue;
+      if (i === currentIndex) {
+        video.play(); // Reproduce el video actual
+      } else {
+        video.pause(); // Pausa los otros
+        video.currentTime = 0; // Reinicia los otros
+      }
+    }
+
+    updateLikeAndComments(); // Actualiza los likes y comentarios del video actual
+  }
+
+  // Agrega un nuevo video al slider
+  function addVideo(file) {
+    const slide = document.createElement('div');
+    slide.classList.add('slide');
+    slide.style.position = 'relative';
+
+    const video = document.createElement('video');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('autoplay', '');
+    video.src = URL.createObjectURL(file); // Carga local del video
+
+    // Icono central de reproducción/pausa
+    const centerIcon = document.createElement('div');
+    centerIcon.className = 'video-center-icon';
+    centerIcon.innerHTML = '⏸️';
+    slide.appendChild(centerIcon);
+
+    // Contenedor de barra de progreso
+    const progressContainer = document.createElement('div');
+    progressContainer.className = 'video-progress-container';
+
+    const progressBar = document.createElement('div');
+    progressBar.className = 'video-progress-bar';
+    progressContainer.appendChild(progressBar);
+    slide.appendChild(progressContainer);
+
+    const progressThumb = document.createElement('div');
+    progressThumb.className = 'progress-thumb';
+    progressContainer.appendChild(progressThumb);
+
+    let isDragging = false;
+
+    // Eventos para arrastrar el "thumb" de la barra de progreso
+    progressThumb.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      e.preventDefault();
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+
+      const rect = progressContainer.getBoundingClientRect();
+      let newX = e.clientX - rect.left;
+
+      if (newX < 0) newX = 0;
+      if (newX > rect.width) newX = rect.width;
+
+      const newPercent = newX / rect.width;
+
+      // Actualiza tiempo del video y la barra visualmente
+      video.currentTime = newPercent * video.duration;
+      progressBar.style.width = `${newPercent * 100}%`;
+      progressThumb.style.left = `${newPercent * 100}%`;
+    });
+
+    // Controles inferiores: tiempo y botón de mute
+    const controls = document.createElement('div');
+    controls.className = 'video-controls';
+
+    const timeDisplay = document.createElement('span');
+    timeDisplay.textContent = '0:00 / 0:00';
+
+    const muteBtn = document.createElement('button');
+    muteBtn.textContent = '🔇';
+    muteBtn.style.background = 'transparent';
+    muteBtn.style.border = 'none';
+    muteBtn.style.color = 'white';
+    muteBtn.style.cursor = 'pointer';
+    muteBtn.style.fontSize = '1.2em';
+
+    controls.appendChild(timeDisplay);
+    controls.appendChild(muteBtn);
+
+    slide.appendChild(video);
+    slide.appendChild(controls);
+    sliderWrapper.appendChild(slide);
+
+    // Cambiar entre mute y unmute
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    });
+
+    // Mostrar icono de pausa/reproducción al hacer clic en el video
+    video.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+        centerIcon.innerHTML = '▶️';
+      } else {
+        video.pause();
+        centerIcon.innerHTML = '⏸️';
+      }
+      centerIcon.style.display = 'block';
+      setTimeout(() => {
+        centerIcon.style.display = 'none';
+      }, 700);
+    });
+
+    // Actualización visual del progreso y tiempo del video
+    video.addEventListener('timeupdate', () => {
+      const percentage = (video.currentTime / video.duration) * 100;
+      progressBar.style.width = `${percentage}%`;
+      progressThumb.style.left = `${percentage}%`;
+      timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`;
+    });
+
+    // Permite cambiar el tiempo del video haciendo clic en la barra
+    progressContainer.addEventListener('click', (e) => {
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const percentage = clickX / rect.width;
+      video.currentTime = percentage * video.duration;
+    });
+
+    // Registra el video en el arreglo de datos
+    videosData.push({
+      likes: 0,
+      liked: false,
+      comments: []
+    });
+  }
+
+  // Actualiza la interfaz de likes y comentarios del video actual
+  function updateLikeAndComments() {
+    const data = videosData[currentIndex];
+    if (!data) return;
+
+    likeCount.textContent = data.likes;
+    likeIcon.classList.toggle('liked', data.liked);
+
+    commentsList.innerHTML = '';
+    if (data.comments.length === 0) {
+      commentsList.innerHTML = '<p style="color:#aaa;">Sin comentarios aún.</p>';
+    } else {
+      data.comments.forEach(c => {
+        const div = document.createElement('div');
+        div.classList.add('comment');
+        div.textContent = c;
+        commentsList.appendChild(div);
+      });
+    }
+  }
+
+  // Evento cuando se suben archivos de video
+  videoUploader.addEventListener('change', () => {
+    const files = videoUploader.files;
+    if (files.length === 0) return;
+
+    loadingOverlay.style.display = 'flex'; // Muestra pantalla de carga
+
+    setTimeout(() => {
+      for (let i = 0; i < files.length; i++) {
+        if (!files[i].type.startsWith('video/')) continue;
+        addVideo(files[i]);
+      }
+
+      if (sliderWrapper.children.length > 0) {
+        sliderContainer.style.display = 'block';
+        likeContainer.style.display = 'flex';
+        commentsSection.style.display = 'block';
+        emptyMessage.style.display = 'none';
+        currentIndex = 0;
+        updateSlider();
+      }
+
+      loadingOverlay.style.display = 'none'; // Oculta la pantalla de carga
+    }, 2000); // Simula un tiempo de carga de 2 segundos
+  });
+
+  // Mueve el slider a la izquierda
+  btnLeft.addEventListener('click', () => {
+    if (sliderWrapper.children.length === 0) return;
+    currentIndex = (currentIndex === 0) ? sliderWrapper.children.length - 1 : currentIndex - 1;
+    updateSlider();
+  });
+
+  // Mueve el slider a la derecha
+  btnRight.addEventListener('click', () => {
+    if (sliderWrapper.children.length === 0) return;
+    currentIndex = (currentIndex + 1) % sliderWrapper.children.length;
+    updateSlider();
+  });
+
+  // Alterna el "like" del video actual
+  likeIcon.addEventListener('click', () => {
+    const data = videosData[currentIndex];
+    if (!data) return;
+    data.liked = !data.liked;
+    data.likes += data.liked ? 1 : -1;
+    updateLikeAndComments();
+  });
+
+  // Enviar un nuevo comentario
+  commentForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const text = commentInput.value.trim();
+    if (text === '') return;
+    const data = videosData[currentIndex];
+    if (!data) return;
+    data.comments.push(text);
+    commentInput.value = '';
+    updateLikeAndComments();
+  });
+</script>
+
+</body>
+</html>
+

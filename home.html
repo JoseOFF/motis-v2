@@ -2,254 +2,544 @@
 <html lang="es">
 <head>
     <title>Inicio</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/sweet-alert.min.js"></script>
-    <link rel="stylesheet" href="css/sweet-alert.css">
-    <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8"> <!-- Define codificación UTF-8 para caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Hace que la página sea responsive -->
+    
+    <!-- Scripts y hojas de estilo externas -->
+    <script src="js/sweet-alert.min.js"></script> <!-- Librería Sweet Alert para alertas bonitas -->
+    <link rel="stylesheet" href="css/sweet-alert.css"> <!-- Estilos para Sweet Alert -->
+    <link rel="stylesheet" href="css/material-design-iconic-font.min.css"> <!-- Iconos Material Design -->
+    <link rel="stylesheet" href="css/normalize.css"> <!-- Normaliza estilos CSS entre navegadores -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"> <!-- Framework Bootstrap para diseño responsivo -->
+    <link rel="stylesheet" href="css/jquery.mCustomScrollbar.css"> <!-- Estilos para scrollbars personalizados -->
+    <link rel="stylesheet" href="css/style.css"> <!-- Tus estilos personalizados -->
+    
+    <!-- Carga jQuery desde CDN, con fallback local si falla -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
-    <script src="js/modernizr.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+      window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>') 
+      /* Si jQuery no se cargó desde CDN, se carga local */
+    </script>
+    
+    <script src="js/modernizr.js"></script> <!-- Detecta características HTML5/CSS3 del navegador -->
+    <script src="js/bootstrap.min.js"></script> <!-- JS de Bootstrap -->
+    <script src="js/jquery.mCustomScrollbar.concat.min.js"></script> <!-- Plugin de scrollbar -->
+    <script src="js/main.js"></script> <!-- Tu script principal -->
+
+    <!-- Botpress Chatbot scripts externos -->
     <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
-    <link rel="icon" href="assets/img/logo.png" type="image/png">
-    
+    <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
 
-    <style>
-        body {
-  background-color: gray !important; /* O puedes usar otro tono como # */
-}
+    <link rel="icon" href="assets/img/logo.png" type="image/png"> <!-- Ícono de la página -->
 
-   
+<!-- Estilos internos CSS -->
+<style>
+  /* --------------------------- */
+  /* Estilo general del body */
+  body {
+    font-family: Arial, sans-serif; /* Fuente base */
+    background-color: #f0f2f5; /* Fondo gris claro */
+    margin: 0; /* Sin margen por defecto */
+    padding: 0; /* Sin padding por defecto */
+    margin-right: 360px; /* Margen derecho para dejar espacio para panel lateral */
+  }
 
-        .social-section {
-            max-width: 420px;
-            margin: 30px auto;
-            padding: 20px;
-        }
-    
-        #postForm {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-    
-        #postForm input,
-        #postForm textarea,
-        #postForm button {
-            width: 100%;
-            font-size: 14px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-    
-        #postForm button {
-            background-color: #3897f0;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    
-        #feed {
+  /* --------------------------- */
+  /* Panel lateral derecho de mensajes */
+  .private-messages-container {
+    position: fixed; /* Fijo en la pantalla */
+    top: auto; /* No está anclado arriba */
+    bottom: 0; /* Anclado al fondo */
+    right: 0; /* Pegado al borde derecho */
+    height: 83vh; /* Altura: 83% del viewport */
+    width: 300px; /* Ancho fijo */
+    background-color: #fff; /* Fondo blanco */
+    border-left: 1px solid #ccc; /* Borde izquierdo gris claro */
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05); /* Sombra leve a la izquierda */
+    padding: 10px; /* Espacio interno */
+    box-sizing: border-box; /* Incluye padding en tamaño */
+    display: flex; /* Flexbox para orden */
+    flex-direction: column; /* Columnas verticales */
+    z-index: 1000; /* Encima de otros elementos */
+    margin-bottom: 80px; /* Margen inferior */
+  }
+
+  /* Feed principal (probablemente contenedor de mensajes) */
+  #feed {
+    margin-bottom: 20px; /* Espacio inferior */
+    padding-bottom: 0; /* Sin padding inferior */
+  }
+
+  /* Título del panel lateral */
+  .private-messages-container h3 {
+    margin-top: 0; /* Sin margen arriba */
+    font-size: 18px; /* Tamaño de fuente */
+    text-align: center; /* Centrado */
+    color: #1877f2; /* Color azul Facebook */
+    user-select: none; /* No se puede seleccionar el texto */
+  }
+
+  /* --------------------------- */
+  /* Lista de usuarios en la barra lateral */
+  .chat-users-list {
+    background-color: white; /* Fondo blanco */
+    padding: 0; /* Sin padding */
+    flex: 1; /* Toma todo el espacio disponible */
+    overflow-y: auto; /* Scroll vertical si hay overflow */
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Columna */
+    font-family: Helvetica, Arial, sans-serif; /* Fuente */
+    margin-bottom: 10px; /* Margen abajo */
+  }
+
+  /* Cada usuario en la lista */
+  .chat-user {
+    display: flex; /* Flexbox */
+    align-items: center; /* Alineados verticalmente */
+    padding: 10px 12px; /* Espacio interno */
+    cursor: pointer; /* Cursor puntero */
+    border-radius: 4px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+    margin: 0; /* Sin margen */
+    transition: box-shadow 0.25s ease, background-color 0.25s ease; /* Transición suave */
+    user-select: none; /* No se puede seleccionar */
+  }
+
+  /* Efecto hover (al pasar el mouse) en usuario */
+  .chat-user:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Sombra */
+    background-color: #f0f2f5; /* Fondo gris claro */
+  }
+
+  /* Usuario seleccionado */
+  .chat-user.selected {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); /* Sombra más fuerte */
+    background-color: #e2e6ea; /* Fondo gris un poco más oscuro */
+  }
+
+  /* Foto/avatar del usuario */
+  .chat-user img {
+    width: 36px; /* Ancho */
+    height: 36px; /* Alto */
+    border-radius: 50%; /* Circular */
+    object-fit: cover; /* La imagen se ajusta recortando si es necesario */
+    margin-right: 10px; /* Espacio a la derecha */
+  }
+
+  /* Nombre del usuario */
+  .chat-user .username {
+    font-size: 15px; /* Tamaño fuente */
+    font-weight: 500; /* Semi-negrita */
+    color: #050505; /* Color casi negro */
+    text-align: left; /* Alineado a la izquierda */
+  }
+
+  /* --------------------------- */
+  /* Ventana principal de chat */
+  .chat-window {
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Columna vertical */
+    flex: 1; /* Toma todo el espacio posible */
+    position: relative; /* Para posicionar elementos hijos */
+    background: #f0f2f5; /* Fondo gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    overflow: hidden; /* Esconde overflow */
+    border: 1px solid #ccc; /* Borde gris */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-top: 10px; /* Margen superior */
+  }
+
+  /* Encabezado de la ventana de chat */
+  .chat-header {
+    background-color: #1877f2; /* Azul Facebook */
+    color: white; /* Texto blanco */
+    padding: 10px 15px; /* Espaciado */
+    font-weight: bold; /* Texto en negrita */
+    user-select: none; /* No seleccionable */
+  }
+
+  /* Contenedor de mensajes */
+  .chat-messages {
+    flex: 1; /* Toma todo el espacio disponible */
+    overflow-y: auto; /* Scroll vertical */
+    padding: 15px; /* Padding */
+    padding-bottom: 85px; /* Espacio para el input fijo */
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Columna */
+    gap: 10px; /* Espacio entre mensajes */
+    background: #fff; /* Fondo blanco */
+  }
+
+  /* Contenedor del cuerpo del chat */
+  .chat-body {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    padding-top: 30px;
-}
-
-.post {
-    width: 500px; /* Controla el ancho del post completo */
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    height: 100%;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  /* Estilo general para cada mensaje */
+  .chat-message {
+    max-width: 70%; /* Máximo ancho del mensaje */
+    padding: 10px 15px; /* Espaciado interno */
+    border-radius: 20px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño fuente */
+    line-height: 1.4; /* Altura de línea */
+    word-break: break-word; /* Rompe palabras largas */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Sombra leve */
+    align-self: flex-start; /* Alineado al inicio (izquierda) */
+  }
+
+  /* Mensaje recibido: estilo rosa claro */
+  .chat-message.contact {
+    background-color: #fdd0e9; /* Rosa claro */
+    color: #333; /* Texto oscuro */
+    align-self: flex-start; /* Izquierda */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 4px;
+  }
+
+  /* Mensaje enviado por el usuario: azul */
+  .chat-message.user {
+    background-color: #1877f2; /* Azul Facebook */
+    color: white; /* Texto blanco */
+    align-self: flex-end; /* Derecha */
+    border-top-left-radius: 20px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 20px;
+  }
+
+  /* Contenedor para input fijo en la parte inferior */
+  .chat-input-container {
+    position: absolute; /* Posicionado respecto a .chat-window */
+    bottom: 0; /* Pegado abajo */
+    left: 0; 
+    right: 0;
+    display: flex; /* Flexbox */
+    padding: 15px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+
+  /* Input para escribir mensaje */
+  #chatInput {
+    flex: 1; /* Ocupa todo el espacio */
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none; /* Sin borde azul al seleccionar */
+  }
+
+  /* Estilo cuando el input está enfocado */
+  #chatInput:focus {
+    border-color: #1877f2; /* Azul */
+    box-shadow: 0 0 5px #1877f2aa; /* Sombra azul suave */
+  }
+
+  /* Botón para enviar mensaje */
+  #sendMessageBtn {
+    margin-left: 10px; /* Espacio a la izquierda */
+    padding: 10px 15px;
+    background-color: #1877f2; /* Azul Facebook */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Efecto hover del botón enviar */
+  #sendMessageBtn:hover {
+    background-color: #da2a73; /* Cambia a rosa */
+  }
+
+  /* Botón para cerrar chat */
+  .close-chat-btn {
+    position: absolute; /* Posicionado dentro de chat-window */
+    top: 17px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 1;
+  }
+
+  /* Hover del botón cerrar */
+  .close-chat-btn:hover {
+    color: #ffd1dc; /* Cambia a rosa claro */
+  }
+
+/* --------------------------- */
+/* Sección social principal */
+.social-section {
+  max-width: 420px; /* Ancho máximo del contenedor social */
+  margin: 30px auto; /* Márgenes arriba y abajo, centrado horizontal */
+  padding: 20px; /* Espacio interno */
 }
 
+/* Estilos para el contenedor y formulario de creación de posts */
+#create-post, #postForm {
+  background: #fff; /* Fondo blanco */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  display: flex; /* Flexbox */
+  flex-direction: column; /* Elementos en columna */
+  gap: 10px; /* Espacio entre elementos */
+  transform: translateX(-145px); /* Mueve el bloque hacia la izquierda */
+}
+
+/* Inputs, textarea y botones dentro del formulario */
+#postForm input,
+#postForm textarea,
+#postForm button {
+  width: 100%; /* Ocupan todo el ancho del contenedor */
+  font-size: 14px; /* Tamaño de fuente */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes ligeramente redondeados */
+  border: 1px solid #ccc; /* Borde gris claro */
+}
+
+/* Estilo específico para el botón */
+#postForm button {
+  background-color: #3897f0; /* Azul claro */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor pointer para indicar clickeable */
+}
+
+/* Cambio de color al pasar el mouse sobre el botón */
+#postForm button:hover {
+  background-color: #2d6cc4; /* Azul más oscuro */
+}
+
+/* Contenedor de publicaciones */
+#feed {
+  display: flex; /* Flexbox */
+  flex-direction: column; /* En columna */
+  align-items: center; /* Centrado horizontal */
+  gap: 20px; /* Espacio entre posts */
+  padding-top: 30px; /* Espacio arriba */
+}
+
+/* Estilo general de cada publicación */
+.post {
+  width: 500px; /* Ancho fijo */
+  background: white; /* Fondo blanco */
+  border: 1px solid #ccc; /* Borde gris */
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Evita que contenido sobresalga */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  margin-right: 300px; /* Margen derecho para no sobreponer */
+}
+
+/* Imagen dentro del post */
 .post img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%; /* Ocupa todo el ancho del post */
+  height: auto; /* Ajusta la altura automáticamente */
+  display: block; /* Evita espacios en línea */
 }
 
-.post p {
-    padding: 10px;
-    margin: 0;
-    text-align: left;
+/* Párrafos y contenido textual dentro del post */
+.post p,
+.post .content {
+  padding: 15px; /* Espaciado interno */
+  margin: 0; /* Sin margen */
+  text-align: left; /* Texto alineado a la izquierda */
 }
 
-    
-        .post .content {
-            padding: 15px;
-            text-align: left;
-        }
-    
-        .username {
-            font-weight: bold;
-        }
-    
-        .icons {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-    
-        .icons span {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        .post-actions {
+/* Nombre de usuario en negrita */
+.username {
+  font-weight: bold;
+}
+
+/* Contenedor de íconos */
+.icons {
+  font-size: 18px; /* Tamaño de íconos */
+  margin-top: 10px; /* Margen arriba */
+}
+
+/* Cada ícono con margen a la derecha y puntero */
+.icons span {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* Área para acciones del post (like, etc.) */
+.post-actions {
   padding: 10px;
 }
 
+/* Botón para "Me gusta" */
 .like-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 18px;
-  color: #e74c3c;
-  margin-bottom: 10px;
+  background: none; /* Sin fondo */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor clickeable */
+  font-size: 18px; /* Tamaño */
+  color: #e74c3c; /* Rojo */
+  margin-bottom: 10px; /* Margen abajo */
 }
 
+/* Sección de comentarios */
 .comment-section {
-  margin-top: 10px;
+  margin-top: 10px; /* Margen arriba */
 }
 
+/* Input para escribir comentarios */
 .comment-input {
-  width: 70%;
+  width: 70%; /* Ocupa 70% del ancho */
   padding: 5px;
 }
 
+/* Botón para enviar comentario */
 .comment-btn {
   padding: 5px 10px;
   margin-left: 5px;
 }
 
+/* Lista de comentarios */
 .comments-list {
-  list-style: none;
+  list-style: none; /* Sin viñetas */
   padding: 0;
   margin-top: 10px;
 }
 
+/* Cada comentario */
 .comments-list li {
-  background: #f0f0f0;
+  background: #f0f0f0; /* Fondo gris claro */
   margin-bottom: 5px;
   padding: 5px;
-  border-radius: 5px;
+  border-radius: 5px; /* Bordes redondeados */
 }
+
+/* Contenedor para crear nuevo post */
 .create-post {
   background-color: #fff;
   padding: 15px;
-  margin: 20px auto;
-  max-width: 600px;
+  margin: 20px auto; /* Centrado con margen arriba y abajo */
+  max-width: 600px; /* Ancho máximo */
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Cabecera del post con foto y nombre */
 .post-header {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start; /* Alinea inicio verticalmente */
 }
 
+/* Foto de perfil circular */
 .profile-pic {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
+  border-radius: 50%; /* Circular */
+  margin-right: 10px; /* Espacio a la derecha */
 }
 
+/* Textarea para post y comentarios */
 #create-post textarea,
 #commentInput {
   width: 100%;
   height: 80px;
-  resize: none;
+  resize: none; /* No se puede redimensionar */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  font-family: inherit;
+  font-family: inherit; /* Usa la fuente del padre */
 }
 
+/* Pie del post con botones */
 .post-footer {
   margin-top: 10px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
 }
 
+/* Input para foto */
 #photoInput {
-  flex: 1;
+  flex: 1; /* Ocupa espacio disponible */
 }
 
+/* Botón para publicar */
 .post-button {
-  background-color: #f2187e;
+  background-color: #f2187e; /* Color rosa fuerte */
   color: white;
   border: none;
   padding: 8px 16px;
   margin-left: 10px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Transición suave */
 }
 
+/* Hover para botón publicar */
 .post-button:hover {
-  background-color: #af1d66;
+  background-color: #af1d66; /* Rosa más oscuro */
 }
+
+/* Ícono para subir imagen */
 .upload-icon {
   cursor: pointer;
   color: #555;
   margin-right: 10px;
 }
 
+/* Hover para ícono subir imagen */
 .upload-icon:hover {
-  color: #1877f2;
+  color: #1877f2; /* Azul Facebook */
 }
 
-.post-footer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* Responsive: para pantallas anchas */
+@media screen and (min-width: 768px) {
+  body {
+    margin-right: 360px; /* Margen derecho para dejar espacio */
+    margin-left: 0; /* Sin margen a la izquierda */
+  }
 }
 
-
-    </style>
-
-
-
-    
+</style>
 </head>
 
+<!-- Acaba el styles comienza el body-->
 
 <body>
+    <!-- Barra lateral fija con menú -->
     <div class="navbar-lateral full-reset">
+        <!-- Botón visible solo en móviles para menú -->
         <div class="visible-xs font-movile-menu mobile-menu-button"></div>
         <div class="full-reset container-menu-movile nav-lateral-scroll">
+            <!-- Logo y título lateral -->
             <div class="logo full-reset all-tittles">
+                <!-- Ícono para cerrar menú en móvil -->
                 <i class="visible-xs zmdi zmdi-close pull-left mobile-menu-button" style="line-height: 55px; cursor: pointer; padding: 0 10px; margin-left: 7px;"></i> 
                 PlayBass!
             </div>
             <div class="nav-lateral-divider full-reset"></div>
             <div class="full-reset" style="padding: 10px 0; color:#fff;">
                 <figure>
+                    <!-- Imagen del logo -->
                     <img src="assets/img/logo.png" alt="Biblioteca" class="img-responsive center-box" style="width:55%;">
                 </figure>
                 <p class="text-center" style="padding-top: 15px;">Menu de PlayBass!</p>
             </div>
             <div class="nav-lateral-divider full-reset"></div>
+            <!-- Menú lateral con listas -->
             <div class="full-reset nav-lateral-list-menu">
                 <ul class="list-unstyled">
+                    <!-- Enlace a Inicio -->
                     <li><a href="home.html"><i class="zmdi zmdi-home zmdi-hc-fw"></i>&nbsp;&nbsp; Inicio</a></li>
                     
+                    <!-- Menú desplegable Aprende + -->
                     <li>
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-assignment-o zmdi-hc-fw"></i>&nbsp;&nbsp; Aprende +<i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
                         <ul class="list-unstyled">
@@ -257,337 +547,365 @@
                             <li><a href="catalog.html"><i class="zmdi zmdi-bookmark-outline zmdi-hc-fw"></i>&nbsp;&nbsp; Eres nuevo en esto?</a></li>
                         </ul>
                     </li>
+                    <!-- Menú desplegable Servicios -->
                     <li>
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-case zmdi-hc-fw"></i>&nbsp;&nbsp; Servicios <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
                         <ul class="list-unstyled">
                             <li><a href="institution.html"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>&nbsp;&nbsp; Reconocimiento de notas</a></li>
                             <li><a href="provider.html"><i class="zmdi zmdi-truck zmdi-hc-fw"></i>&nbsp;&nbsp; Simulador de bajo</a></li>
-                           
                         </ul>
                     </li>
+                    <!-- Menú desplegable Foro y comunidad -->
                     <li>
                         <div class="dropdown-menu-button"><i class="zmdi zmdi-account-add zmdi-hc-fw"></i>&nbsp;&nbsp; Foro y comunidad <i class="zmdi zmdi-chevron-down pull-right zmdi-hc-fw icon-sub-menu"></i></div>
                         <ul class="list-unstyled">
-                            <li><a href="admin.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; Contactos</a></li>
-                            <li><a href="teacher.html"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo docente</a></li>
-                            <li><a href="student.html"><i class="zmdi zmdi-accounts zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo estudiante</a></li>
-                            <li><a href="personal.html"><i class="zmdi zmdi-male-female zmdi-hc-fw"></i>&nbsp;&nbsp; Nuevo personal administrativo</a></li>
+                            <li><a href="vibass.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>&nbsp;&nbsp; ViBass</a></li>
                         </ul>
                     </li>
                     <li>
-                     
+                    <!-- Enlace a configuraciones avanzadas -->
                     <li><a href="advancesettings.html"><i class="zmdi zmdi-wrench zmdi-hc-fw"></i>&nbsp;&nbsp; Configuraciones avanzadas</a></li>
                 </ul>
             </div>
         </div>
     </div>
+
+    <!-- Contenedor principal de contenido de página -->
     <div class="content-page-container full-reset custom-scroll-containers">
+        <!-- Barra superior de usuario -->
         <nav class="navbar-user-top full-reset">
             <ul class="list-unstyled full-reset">
                 <figure>
+                   <!-- Imagen del usuario -->
                    <img src="assets/img/user01.png" alt="user-picture" class="img-responsive img-circle center-box">
                 </figure>
 
+                <!-- Nombre de usuario estático -->
+                <li style="color:#fff; cursor:default;">
+                    <span class="all-tittles" id="nombreUsuario">Admin Name</span>
+                </li>
 
-             <li style="color:#fff; cursor:default;">
-  <span class="all-tittles" id="nombreUsuario">Admin Name</span>
-</li>
-
-
-
+                <!-- Botón para salir del sistema -->
                 <li  class="tooltips-general exit-system-button" data-href="index.html" data-placement="bottom" title="Salir del sistema">
                     <i class="zmdi zmdi-power"></i>
                 </li>
-                <li  class="tooltips-general search-book-button" data-href="searchbook.html" data-placement="bottom" title="Buscar libro">
-                    <i class="zmdi zmdi-search"></i>
-                </li>
+
+                <!-- Botón de ayuda -->
                 <li  class="tooltips-general btn-help" data-placement="bottom" title="Ayuda">
                     <i class="zmdi zmdi-help-outline zmdi-hc-fw"></i>
                 </li>
+
+                <!-- Botón menú móvil visible solo en XS -->
                 <li class="mobile-menu-button visible-xs" style="float: left !important;">
                     <i class="zmdi zmdi-menu"></i>
                 </li>
+
+                <!-- Botón menú escritorio oculto en XS -->
                 <li class="desktop-menu-button hidden-xs" style="float: left !important;">
                     <i class="zmdi zmdi-swap"></i>
                 </li>
             </ul>
         </nav>
+
         <div class="container">
             <div class="page-header">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              <h1 class="all-tittles">PlayBass.Net! <small></small></h1>
+                <!-- Título principal de la página -->
+                <h1 class="all-tittles">PlayBass.Net! <small></small></h1>
             </div>
         </div>
+
+        <!-- Sección principal con formulario para crear post -->
         <section class="full-reset text-center" style="padding: 40px 0;">
             <form id="postForm" class="create-post">
                 <div class="post-header">
+                  <!-- Textarea para contenido del post -->
                   <textarea id="commentInput" placeholder="¿En qué estás pensando?" required></textarea>
                 </div>
                 <div class="post-footer">
-                  <!-- Ícono para subir imagen -->
-                 <!-- Ícono para subir imagen (solo se verá el ícono, no el input file) -->
-                 <label for="photoInput" class="upload-icon">
+                  <!-- Label que actúa como ícono para subir imagen -->
+                  <label for="photoInput" class="upload-icon">
                     <i class="zmdi zmdi-camera-add zmdi-hc-2x"></i>
                   </label>
+                  <!-- Input tipo file oculto para subir imagen -->
                   <input type="file" id="photoInput" accept="image/*" required style="display: none;">
-                  
-
-                  
-                  
-                  <!-- Botón de publicar -->
+                  <!-- Botón para publicar el post -->
                   <button type="submit" class="post-button">Publicar</button>
                 </div>
               </form>
-              
-              
+
+        <!-- SECCIÓN DE MENSAJES PRIVADOS -->
+        <div class="private-messages-container">
+          <h3>Tus contactos</h3>
+          
+          <div id="chatUsersList" class="chat-users-list">
+            <!-- Usuarios se cargarán dinámicamente aquí -->
+          </div>
+
+          <div id="chatWindow" class="chat-window" style="display: none;">
+            <div class="chat-header">
+              <h4 id="chatWith"></h4> <!-- Nombre del contacto con quien chateas -->
+            </div>
+
+            <!-- Contenedor principal del chat (mensajes + input) -->
+            <div class="chat-body">
+              <div id="chatMessages" class="chat-messages"></div> <!-- Mensajes -->
+
+              <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+                <button id="sendMessageBtn">Enviar</button>
+              </div>
+            </div>
+
+            <!-- Botón para cerrar la ventana de chat -->
+            <div class="chat-header">
+              <h4 id="chatWith"></h4>
+              <button class="close-chat-btn" onclick="document.getElementById('chatWindow').style.display='none'">×</button>
+            </div>
+
+            <!-- Loader visible cuando se publica un post -->
+            <div id="loader" style="display: none; margin-top: 10px;">
+              <img src="assets/img/loader.gif" alt="Cargando..." style="width: 40px;">
+              <p>Publicando tu post...</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Contenedor para el chatbot (vacío aquí, se inyecta con JS) -->
         <div id="feed"></div>
-          <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
+        <script src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"></script>
+        <script src="https://files.bpcontent.cloud/2025/05/22/22/20250522223936-92WAM02X.js"></script>
 
+        <!-- Módulos JS y lógica para base de datos -->
+        <script type="module">
+          import { supabaseCliente } from './supabase-init.js';
 
-       <script type="module">
-  import { supabaseCliente } from './supabase-init.js';
+          // Obtener usuario guardado en localStorage
+          const user = JSON.parse(localStorage.getItem("usuario"));
 
-  const user = JSON.parse(localStorage.getItem("usuario"));
-  if (!user) {
-    window.location.href = "sesion.html";
+          // Si no hay usuario, redirigir a página de sesión
+          if (!user) {
+            window.location.href = "sesion.html";
+          }
+
+          // Evento submit para el formulario de publicación de posts
+          document.getElementById('postForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Obtener archivo seleccionado e input de texto
+            const file = document.getElementById('photoInput').files[0];
+            const comment = document.getElementById('commentInput').value.trim();
+
+            // Si falta alguno, no continuar
+            if (!file || !comment) return;
+
+            // Mostrar loader mientras se publica
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block';
+
+            // Generar nombre único para archivo con timestamp
+            const fileName = `${Date.now()}_${file.name}`;
+
+            try {
+              // Subir archivo a storage de supabase
+              const { data: storageData, error: storageError } = await supabaseCliente.storage
+                .from('posts')
+                .upload(fileName, file);
+
+              // Si error, lanzar excepción
+              if (storageError) throw new Error(storageError.message);
+
+              // Obtener URL pública de la imagen subida
+              const { data: publicUrlData } = supabaseCliente
+                .storage
+                .from('posts')
+                .getPublicUrl(fileName);
+
+              const imageUrl = publicUrlData.publicUrl;
+
+              // Insertar registro en tabla posts con comentario e imagen
+              const { error: insertError } = await supabaseCliente
+                .from('posts')
+                .insert([{ comment: comment, image_url: imageUrl }]);
+
+              if (insertError) throw new Error(insertError.message);
+
+              // Limpiar inputs después de publicar
+              document.getElementById('commentInput').value = '';
+              document.getElementById('photoInput').value = '';
+
+              // Refrescar posts (función externa, asumo definida en otro lado)
+              await displayPosts();
+
+            } catch (err) {
+              // Mostrar error en consola y alerta
+              console.error("Error al publicar:", err.message);
+              alert("Error al publicar. Intenta de nuevo.");
+            } finally {
+              // Ocultar loader
+              loader.style.display = 'none';
+            }
+          });
+       async function displayPosts() {
+  // Obtener el contenedor donde se mostrarán los posts
+  const feed = document.getElementById('feed');
+  feed.innerHTML = ''; // Limpiar contenido previo
+
+  // Obtener posts desde la base de datos supabase ordenados por fecha descendente
+  const { data: posts, error } = await supabaseCliente
+    .from('posts')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    // Si ocurre un error al obtener posts, mostrar en consola y salir
+    console.error("Error al cargar posts:", error.message);
+    return;
   }
 
-  document.getElementById('postForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
+  // Por cada post recibido crear el bloque HTML correspondiente
+  posts.forEach(post => {
+    const div = document.createElement('div');
+    div.className = "post"; // Clase CSS para estilo del post
 
-    const file = document.getElementById('photoInput').files[0];
-    const comment = document.getElementById('commentInput').value.trim();
-
-    if (!file || !comment) return;
-
-    const fileName = `${Date.now()}_${file.name}`; // No usamos user.id porque no hay user_id
-
-    // 1. Subir imagen al storage
-    const { data: storageData, error: storageError } = await supabaseCliente.storage
-      .from('posts') // nombre del bucket en Supabase Storage
-      .upload(fileName, file);
-
-    if (storageError) {
-      console.error("Error al subir imagen:", storageError.message);
-      return;
-    }
-
-    // 2. Obtener la URL pública
-    const { data: publicUrlData } = supabaseCliente
-      .storage
-      .from('posts')
-      .getPublicUrl(fileName);
-
-    const imageUrl = publicUrlData.publicUrl;
-
-    // 3. Insertar post en la base de datos
-    const { error: insertError } = await supabaseCliente
-      .from('posts')
-      .insert([{
-        comment: comment,        // 👈 campo correcto
-        image_url: imageUrl      // 👈 campo correcto
-      }]);
-
-    if (insertError) {
-      console.error("Error al guardar post:", insertError.message);
-      return;
-    }
-
-    document.getElementById('commentInput').value = '';
-    document.getElementById('photoInput').value = '';
-
-    await displayPosts();
-  });
-
-  async function displayPosts() {
-    const feed = document.getElementById('feed');
-    feed.innerHTML = '';
-
-    const { data: posts, error } = await supabaseCliente
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error("Error al cargar posts:", error.message);
-      return;
-    }
-
-    posts.forEach(post => {
-      const div = document.createElement('div');
-      div.className = "post";
-      div.innerHTML = `
-        <img src="${post.image_url}" alt="Imagen del post">
-        <p>${post.comment}</p>
-        <div class="post-actions">
-          <button class="like-btn">❤️ <span class="like-count">0</span></button>
-          <div class="comment-section">
-            <input type="text" class="comment-input" placeholder="Escribe un comentario...">
-            <button class="comment-btn">Comentar</button>
-            <ul class="comments-list"></ul>
-          </div>
+    // Estructura interna del post, con imagen, comentario y acciones
+    div.innerHTML = `
+      <img src="${post.image_url}" alt="Imagen del post">
+      <p>${post.comment}</p>
+      <div class="post-actions">
+        <button class="like-btn">❤️ <span class="like-count">0</span></button>
+        <div class="comment-section">
+          <input type="text" class="comment-input" placeholder="Escribe un comentario...">
+          <button class="comment-btn">Comentar</button>
+          <ul class="comments-list"></ul>
         </div>
-      `;
+      </div>
+    `;
 
-      // Likes (temporales en local)
-      const likeBtn = div.querySelector('.like-btn');
-      const likeCount = div.querySelector('.like-count');
-      let count = 0;
-      likeBtn.addEventListener('click', () => {
-        count++;
-        likeCount.textContent = count;
-      });
-
-      // Comentarios (temporales en local)
-      const commentBtn = div.querySelector('.comment-btn');
-      const commentInput = div.querySelector('.comment-input');
-      const commentsList = div.querySelector('.comments-list');
-
-      commentBtn.addEventListener('click', () => {
-        const text = commentInput.value.trim();
-        if (text !== "") {
-          const li = document.createElement('li');
-          li.textContent = text;
-          commentsList.appendChild(li);
-          commentInput.value = "";
-        }
-      });
-
-      feed.appendChild(div);
+    // Funcionalidad de "Likes" (solo local, no persistente)
+    const likeBtn = div.querySelector('.like-btn');
+    const likeCount = div.querySelector('.like-count');
+    let count = 0; // Contador inicial de likes
+    likeBtn.addEventListener('click', () => {
+      count++;
+      likeCount.textContent = count; // Actualizar contador visual
     });
+
+    // Funcionalidad para agregar comentarios (solo local, no persistente)
+    const commentBtn = div.querySelector('.comment-btn');
+    const commentInput = div.querySelector('.comment-input');
+    const commentsList = div.querySelector('.comments-list');
+
+    commentBtn.addEventListener('click', () => {
+      const text = commentInput.value.trim();
+      if (text !== "") {
+        // Crear elemento li con el comentario y agregar a la lista
+        const li = document.createElement('li');
+        li.textContent = text;
+        commentsList.appendChild(li);
+        commentInput.value = ""; // Limpiar input tras comentar
+      }
+    });
+
+    // Añadir el post generado al contenedor principal
+    feed.appendChild(div);
+  });
+}
+
+// Ejecutar la función para mostrar posts al cargar la página
+displayPosts();
+
+// Inicializar chatbot Botpress cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+  window.botpressWebChat.init({
+    host: 'https://cdn.botpress.cloud/webchat',
+    botId: '92WAM02X',
+    botName: 'Mi Botpress',
+    locale: 'es',
+    showCloseButton: true
+  });
+});
+
+// Código para manejar sesión y mostrar usuario en la interfaz
+document.addEventListener('DOMContentLoaded', () => {
+  // Obtener datos de usuario guardados en localStorage
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  if (!usuario) {
+    // Si no hay usuario logueado, redirigir a index (login)
+    window.location.href = 'index.html';
+    return;
   }
 
-  // Mostrar posts al cargar
-  displayPosts();
+  // Cambiar solo el nombre mostrado del usuario en el menú superior
+  const nombreElem = document.getElementById('nombreUsuario');
+  if (nombreElem) {
+    nombreElem.textContent = usuario.nombre_usuario || 'Usuario';
+  }
 
-
-
-
-           
-  document.addEventListener('DOMContentLoaded', () => {
-    window.botpressWebChat.init({
-      host: 'https://cdn.botpress.cloud/webchat',
-      botId: '92WAM02X',
-      botName: 'Mi Botpress',
-      locale: 'es',
-      showCloseButton: true
+  // Botón para cerrar sesión y borrar datos de usuario en localStorage
+  const logoutBtn = document.querySelector('.exit-system-button');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('usuario');
+      window.location.href = 'index.html';
     });
-  });
-            </script>
+  }
+});
 
+// Importar e iniciar funcionalidad del chat desde otro módulo externo
+import { iniciarChat } from './mensajes.js';
+iniciarChat();
 
-            
-            
-            
-        </section>
-        <div class="modal fade" tabindex="-1" role="dialog" id="ModalHelp">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title text-center all-tittles">ayuda del sistema</h4>
-                </div>
-                <div class="modal-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore dignissimos qui molestias ipsum officiis unde aliquid consequatur, accusamus delectus asperiores sunt. Quibusdam veniam ipsa accusamus error. Animi mollitia corporis iusto.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="zmdi zmdi-thumb-up"></i> &nbsp; De acuerdo</button>
-                </div>
-            </div>
-          </div>
-        </div>
-        <footer class="footer full-reset">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="all-tittles">Acerca de</h4>
-                        <p>
-                            PlayBass es una plataforma para aprender y practicar el bajo eléctrico. Ofrece herramientas interactivas, una biblioteca de canciones y una comunidad donde puedes compartir tu progreso y conectar con otros músicos.
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-sm-6">
-                        <h4 class="all-tittles">Desarrollador</h4>
-                        <ul class="list-unstyled">
-                            <li><i class="zmdi zmdi-check zmdi-hc-fw"></i>&nbsp; © Team Wicho<i class="zmdi zmdi-facebook zmdi-hc-fw footer-social"></i><i class="zmdi zmdi-twitter zmdi-hc-fw footer-social"></i></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-copyright full-reset all-tittles">© Team Wicho</div>
-        </footer>
+</script>
+
+<!-- Pie de página -->          
+</section>
+
+<!-- Modal de ayuda -->
+<div class="modal fade" tabindex="-1" role="dialog" id="ModalHelp">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- Botón cerrar modal -->
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title text-center all-tittles">ayuda del sistema</h4>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore dignissimos qui molestias ipsum officiis unde aliquid consequatur, accusamus delectus asperiores sunt. Quibusdam veniam ipsa accusamus error. Animi mollitia corporis iusto.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          <i class="zmdi zmdi-thumb-up"></i> &nbsp; De acuerdo
+        </button>
+      </div>
     </div>
-
-
-
-    <!-- SECCIÓN DE MENSAJES PRIVADOS -->
-<div class="private-messages-container">
-  <h3>Mensajes privados</h3>
-  <div id="chatUsersList" class="chat-users-list"></div>
-
-  <div id="chatWindow" class="chat-window" style="display:none;">
-    <h4 id="chatWith"></h4>
-    <div id="chatMessages" class="chat-messages"></div>
-    <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
-    <button id="sendMessageBtn">Enviar</button>
   </div>
 </div>
 
+<!-- Footer -->
+<footer class="footer full-reset">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h4 class="all-tittles">Acerca de</h4>
+        <p>
+          PlayBass es una plataforma para aprender y practicar el bajo eléctrico. Ofrece herramientas interactivas, una biblioteca de canciones y una comunidad donde puedes compartir tu progreso y conectar con otros músicos.
+        </p>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <h4 class="all-tittles">Desarrollador</h4>
+        <ul class="list-unstyled">
+          <li><i class="zmdi zmdi-check zmdi-hc-fw"></i>&nbsp; © Team Wicho<i class="zmdi zmdi-facebook zmdi-hc-fw footer-social"></i><i class="zmdi zmdi-twitter zmdi-hc-fw footer-social"></i></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright full-reset all-tittles">© Team Wicho</div>
+</footer>
+</div>
 
-
-    <script type="module">
-  document.addEventListener('DOMContentLoaded', () => {
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-    if (!usuario) {
-      window.location.href = 'index.html';
-      return;
-    }
-
-    // Solo modificar el nombre del usuario, no todos los all-tittles
-    const nombreElem = document.getElementById('nombreUsuario');
-    if (nombreElem) {
-      nombreElem.textContent = usuario.nombre_usuario || 'Usuario';
-    }
-
-    // Botón de cerrar sesión
-    const logoutBtn = document.querySelector('.exit-system-button');
-    if (logoutBtn) {
-      logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('usuario');
-        window.location.href = 'index.html';
-      });
-    }
-  });
-</script>
-
-
-<!-- Al final del body de home.html -->
-<script type="module">
-  import { iniciarChat } from './mensajes.js';
-  iniciarChat();
-</script>
-
-    
 </body>
-
 
 </html>

@@ -2,163 +2,227 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Metadatos básicos y configuración de la página -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <!-- Título que aparece en la pestaña del navegador -->
     <title>Inicio de PlayBass!</title>
-    <link rel="stylesheet" href="css/estilos.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap" rel="stylesheet"> 
-    <link rel="icon" href="assets/img/logo.png" type="image/png">
+    
+    <!-- Enlace a la hoja de estilos CSS personalizada -->
+    <link rel="stylesheet" href="css/estilos.css" />
+    
+    <!-- Fuente externa de Google Fonts para mejorar la tipografía -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- Ícono que aparece en la pestaña del navegador (favicon) -->
+    <link rel="icon" href="assets/img/logo.png" type="image/png" />
 </head>
 
 <body>
+    <!-- Encabezado principal del sitio -->
     <header>
+        <!-- Barra de navegación con enlaces principales -->
         <nav>
             <a href="sesion.html">Iniciar Sesión</a>
-         
             <a href="#">Servicios</a>
             <a href="#">Contacto</a>
         </nav>
+
+        <!-- Texto destacado del encabezado con slogan -->
         <section class="textos-header">
-            <h1>PlayBass! Tu aplicacion para aprender musica</h1>
-            <h2>Aprende musica de forma interactiva!</h2>
+            <h1>PlayBass! Domina el bajo, vive la música.</h1>
+            <h2>La forma más inteligente de aprender bajo eléctrico</h2>
         </section>
-        <div class="wave" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
-                style="height: 100%; width: 100%;">
-                <path d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                    style="stroke: none; fill: #fff;"></path>
-            </svg></div>
+
+        <!-- Onda decorativa SVG debajo del encabezado -->
+        <div class="wave" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+                <path
+                  d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                  style="stroke: none; fill: #fff;"
+                ></path>
+            </svg>
+        </div>
     </header>
+
+    <!-- Contenido principal de la página -->
     <main>
+        <!-- Sección sobre el proyecto -->
         <section class="contenedor sobre-nosotros">
+            <!-- Título de la sección -->
             <h2 class="titulo">Nuestro proyecto</h2>
             <div class="contenedor-sobre-nosotros">
-                <img src="img/ilustracion2.svg" alt="" class="imagen-about-us">
+                <!-- Imagen ilustrativa relacionada con el proyecto -->
+                <img src="img/ilustracion2.svg" alt="Ilustración sobre el proyecto" class="imagen-about-us" />
+
+                <!-- Texto descriptivo sobre los objetivos del proyecto -->
                 <div class="contenido-textos">
-                    <h3><span>1</span>Impulsar el conocimiento sobre el bajo</h3>
-                    <p>Desarrollar un sistema preciso de reconocimiento de notas musicales para bajistas, utilizando inteligencia artificial y procesamiento de audio para detectar frecuencias entre 60 Hz y 250 Hz, facilitando el aprendizaje y práctica del instrumento..</p>
-                    <h3><span>2</span>Crear una comunidad social para músicos</h3>
-                    <p>Permitiendo la interacción entre bajistas, el intercambio de partituras, ejercicios y experiencias, así como la posibilidad de colaborar en proyectos musicales dentro de la plataforma..</p>
+                    <h3><span>1</span> Impulsar el conocimiento sobre el bajo</h3>
+                    <p>
+                        Desarrollar un sistema preciso de reconocimiento de notas musicales para bajistas, utilizando inteligencia artificial y procesamiento de audio para detectar frecuencias entre 60 Hz y 250 Hz, facilitando el aprendizaje y práctica del instrumento.
+                    </p>
+
+                    <h3><span>2</span> Crear una comunidad social para músicos</h3>
+                    <p>
+                        Permitiendo la interacción entre bajistas, el intercambio de partituras, ejercicios y experiencias, así como la posibilidad de colaborar en proyectos musicales dentro de la plataforma.
+                    </p>
                 </div>
             </div>
         </section>
+
+        <!-- Sección de portafolio con imágenes de trabajos -->
         <section class="portafolio">
             <div class="contenedor">
                 <h2 class="titulo">Portafolio</h2>
                 <div class="galeria-port">
+                    <!-- Cada bloque representa una imagen con efecto hover -->
                     <div class="imagen-port">
-                        <img src="img/img1.jpg" alt="">
+                        <img src="img/img1.jpg" alt="Trabajo 1" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img2.jpg" alt="">
+                        <img src="img/img2.jpg" alt="Trabajo 2" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img3.jpg" alt="">
+                        <img src="img/img3.jpg" alt="Trabajo 3" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img1.jpg" alt="">
+                        <img src="img/img1.jpg" alt="Trabajo 4" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img4.jpg" alt="">
+                        <img src="img/img4.jpg" alt="Trabajo 5" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img5.jpg" alt="">
+                        <img src="img/img5.jpg" alt="Trabajo 6" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img6.jpg" alt="">
+                        <img src="img/img6.jpg" alt="Trabajo 7" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
+
                     <div class="imagen-port">
-                        <img src="img/img7.jpg" alt="">
+                        <img src="img/img7.jpg" alt="Trabajo 8" />
                         <div class="hover-galeria">
-                            <img src="img/icono1.png" alt="">
+                            <img src="img/icono1.png" alt="Icono de trabajo" />
                             <p>Nuestro trabajo</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Sección de testimonios de clientes -->
         <section class="clientes contenedor">
-            <h2 class="titulo">Que dicen nuestros clientes</h2>
+            <h2 class="titulo">Qué dicen nuestros clientes</h2>
             <div class="cards">
+                <!-- Testimonio 1 -->
                 <div class="card">
-                    <img src="img/face1.jpg" alt="">
+                    <img src="img/face1.jpg" alt="Foto de Anna" />
                     <div class="contenido-texto-card">
-                        <h4>Name</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, sapiente!</p>
+                        <h4>Anna</h4>
+                        <p>
+                            PlayBass me ayudó a mejorar mi oído musical y afinar mi bajo sin necesidad de equipo costoso. ¡Es como tener un maestro en casa!
+                        </p>
                     </div>
                 </div>
+
+                <!-- Testimonio 2 -->
                 <div class="card">
-                    <img src="img/face2.jpg" alt="">
+                    <img src="img/face2.jpg" alt="Foto de Emma" />
                     <div class="contenido-texto-card">
-                        <h4>Name</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, sapiente!</p>
+                        <h4>Emma</h4>
+                        <p>
+                            La comunidad de PlayBass es increíble, he conectado con otros bajistas y aprendido mucho compartiendo mis progresos. ¡Totalmente recomendable!
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Sección que describe los servicios que ofrece la plataforma -->
         <section class="about-services">
             <div class="contenedor">
                 <h2 class="titulo">Nuestros servicios</h2>
                 <div class="servicio-cont">
+                    <!-- Servicio 1 -->
                     <div class="servicio-ind">
-                        <img src="img/ilustracion1.svg" alt="">
+                        <img src="img/ilustracion1.svg" alt="Icono reconocimiento de notas" />
                         <h3>Reconocimiento de notas</h3>
                     </div>
+
+                    <!-- Servicio 2 -->
                     <div class="servicio-ind">
-                        <img src="img/ilustracion4.svg" alt="">
-                        <h3>Red Social para musicos </h3>
+                        <img src="img/ilustracion4.svg" alt="Icono red social músicos" />
+                        <h3>Red Social para músicos</h3>
                     </div>
+
+                    <!-- Servicio 3 -->
                     <div class="servicio-ind">
-                        <img src="img/ilustracion3.svg" alt="">
+                        <img src="img/ilustracion3.svg" alt="Icono simulador de bajo" />
                         <h3>Simulador de Bajo</h3>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Pie de página con información de contacto -->
     <footer>
         <div class="contenedor-footer">
             <div class="content-foo">
-                <h4>Telefono</h4>
+                <h4>Teléfono</h4>
                 <p>7121282822</p>
             </div>
+
             <div class="content-foo">
                 <h4>Email</h4>
                 <p>WichoDB@gmail.com</p>
             </div>
+
             <div class="content-foo">
-                <h4>Location</h4>
-                <p>Edo.Mex Jocotitlan</p>
+                <h4>Ubicación</h4>
+                <p>Edo. Méx., Jocotitlán</p>
             </div>
         </div>
+
+        <!-- Créditos y derechos reservados -->
         <h2 class="titulo-final">&copy; WichoDB Design | Team Wicho</h2>
     </footer>
 </body>
